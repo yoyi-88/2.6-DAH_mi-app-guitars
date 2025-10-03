@@ -1,0 +1,7 @@
+{
+  "name": "mi-app-guitar",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

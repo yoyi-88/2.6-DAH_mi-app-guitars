@@ -1,0 +1,16 @@
+<ion-card *ngIf="guitarra" [color]="guitarra.enProduccion ? 'primary' : 'light'">
+  <ion-item>
+    <ion-label>
+      <h2>{{ guitarra.nombre | uppercase }}</h2>
+      <p>Corte: {{ guitarra.corte }}</p>
+      <p>Año: {{ guitarra.anio }}</p>
+      <p *ngIf="!guitarra.enProduccion" class="fuera-produccion">
+        Fuera de producción
+      </p>
+    </ion-label>
+
+    <ion-button slot="end" fill="outline" (click)="mostrarDetalles()">
+      Ver
+    </ion-button>
+  </ion-item>
+</ion-card>

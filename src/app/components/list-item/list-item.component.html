@@ -1,0 +1,18 @@
+<!-- Contenido de: src/app/components/task-item/task-item.component.html -->
+
+<ion-card *ngFor="let guitarra of listaDeGuitarras" [color]="guitarra.enProduccion ? 'primary' : 'light'">
+  <ion-item>
+    <ion-label>
+      <h2>{{ guitarra.nombre }}</h2>
+      <p>Corte: {{ guitarra.corte }}</p>
+      <p>Año: {{ guitarra.anio }}</p>
+      <p *ngIf="!guitarra.enProduccion" style="color: red; font-weight: bold;">
+        Fuera de producción
+      </p>
+    </ion-label>
+
+    <ion-button (click)="mostrarDetalles()" slot="end">
+      Ver
+    </ion-button>
+  </ion-item>
+</ion-card>

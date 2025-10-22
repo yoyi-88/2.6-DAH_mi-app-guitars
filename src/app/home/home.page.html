@@ -6,9 +6,25 @@
 
 <ion-content>
   <ion-list>
-    <app-guitarra-item 
-      *ngFor="let guitarra of listaDeGuitarras" 
-      [guitarra]="guitarra">
+    <app-guitarra-item *ngFor="let guitarra of listaDeGuitarras" [guitarra]="guitarra">
     </app-guitarra-item>
   </ion-list>
+
+
+  <!-- Aquí empieza nuestro contenido personalizado -->
+  <ion-grid>
+    <!-- Fila 1: Imagen a la izquierda, texto a la derecha -->
+    <ion-row>
+      <!-- Columna 1: Ocupará la mitad del espacio disponible -->
+      <ion-col>
+        <ion-img src="assets/images/guitar_lessons.jpg" alt="Clases de guitarra"></ion-img>
+      </ion-col>
+
+      <!-- Columna 2: Ocupará la otra mitad del espacio -->
+      <ion-col>
+        <p>¡Atrevete con nuestras clases de guitarra personalizadas! </p>
+        <ion-button>Contactar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

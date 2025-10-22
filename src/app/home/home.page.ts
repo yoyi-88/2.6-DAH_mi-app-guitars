@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonButton } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol, IonButton, IonImg } from '@ionic/angular/standalone';
 
 // Imports de nuestra aplicación
 import { Lista } from '../interfaces/lista'; // Nuestra interfaz de datos
@@ -15,12 +15,13 @@ import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  imports: [IonButton, IonLabel, IonItem, IonCard, IonList,
-    IonHeader, IonToolbar, IonTitle, IonContent, // Componentes de Ionic
+  imports: [IonImg, IonButton, IonLabel, IonItem, IonCard, IonList,
+    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonButton, // Componentes de Ionic
     ListItemComponent, // Nuestro componente hijo
     CommonModule, // El módulo para las directivas estructurales
-    AppHeaderComponent // Nuestro nuevo componente de encabezado
-    , GuitarraItemComponent // Componente para mostrar cada guitarra
+    AppHeaderComponent, // Nuestro nuevo componente de encabezado
+     GuitarraItemComponent // Componente para mostrar cada guitarra
+     
   ],
 })
 export class HomePage {

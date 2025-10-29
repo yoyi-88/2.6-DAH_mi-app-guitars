@@ -1,0 +1,6 @@
+.imagen-guitarra {
+  width: 100%;              /* ocupa todo el ancho disponible */
+  height: 400px;            /* altura fija para todas las imágenes */
+  object-fit: cover;        /* recorta la imagen sin deformarla */
+  border-radius: 200px;       /* bordes*/
+}

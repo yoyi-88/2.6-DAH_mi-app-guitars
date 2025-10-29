@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonIcon, IonButtons } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle],
+  imports: [IonButtons, IonIcon, IonHeader, IonToolbar, IonTitle],
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.scss']
 })

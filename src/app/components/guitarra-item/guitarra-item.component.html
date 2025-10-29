@@ -1,6 +1,8 @@
 <ion-card *ngIf="guitarra" [color]="guitarra.enProduccion ? 'primary' : 'light'">
+
   <ion-item>
     <ion-label>
+      <img [src]="guitarra.imagen" class="imagen-guitarra" alt="{{ guitarra.nombre }}">
       <h2>{{ guitarra.nombre | uppercase }}</h2>
       <p>Corte: {{ guitarra.corte }}</p>
       <p>Año: {{ guitarra.anio }}</p>

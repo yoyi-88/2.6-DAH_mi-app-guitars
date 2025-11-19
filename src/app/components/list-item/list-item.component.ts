@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 // Añadimos las importaciones adicionales que nuestro componente necesita
 import { Input } from '@angular/core';
-import { Lista } from 'src/app/interfaces/lista';
+import { Guitarra } from 'src/app/interfaces/guitarra';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -16,7 +16,7 @@ import { IonicModule } from '@ionic/angular';
 export class ListItemComponent implements OnInit {
 
   // Propiedad de entrada para recibir los datos de la lista
-  @Input() lista!: Lista;
+  @Input() guitarra!: Guitarra;
 
   constructor() { }
 
@@ -24,7 +24,7 @@ export class ListItemComponent implements OnInit {
 
   // Método para mostrar los detalles de la lista en la consola
   mostrarDetalles() {
-    console.log('Datos de la lista:', this.lista);
+    console.log('Datos de la lista:', this.guitarra);
   }
 
 }

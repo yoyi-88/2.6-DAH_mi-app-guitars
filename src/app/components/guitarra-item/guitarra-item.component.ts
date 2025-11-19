@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonCard, IonItem, IonLabel, IonButton, IonImg } from '@ionic/angular/standalone';
-import { Lista } from 'src/app/interfaces/lista';
+import { Guitarra } from 'src/app/interfaces/guitarra';
 
 @Component({
   selector: 'app-guitarra-item',
@@ -11,7 +11,7 @@ import { Lista } from 'src/app/interfaces/lista';
   styleUrls: ['./guitarra-item.component.scss']
 })
 export class GuitarraItemComponent {
-  @Input() guitarra?: Lista; 
+  @Input() guitarra?: Guitarra; 
 
   mostrarDetalles() {
     console.log('Detalles de guitarra:', this.guitarra);

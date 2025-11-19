@@ -1,4 +1,4 @@
-export interface Lista {
+export interface Guitarra {
     id: number;
     imagen: string;
     nombre: string;

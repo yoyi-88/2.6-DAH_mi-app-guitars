@@ -14,13 +14,39 @@
   --ion-color-primary-tint: #d9b84a;
 
   // Color secundario: rojo oscuro 
-  --ion-color-secondary: #b71c1c;
+  --ion-color-secondary: #86461ec0;
   --ion-color-secondary-rgb: 183, 28, 28;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #9e1818;
-  --ion-color-secondary-tint: #c13a3a;
+  --ion-color-secondary-shade: #86461ec0;
+  --ion-color-secondary-tint: #86461ec0;
 }
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    // Fondo de la aplicación 
+    --ion-background-color: #0b0c0c;
+    --ion-background-color-rgb: 11, 12, 12;
+    
+
+    
+    // Color del texto base 
+    --ion-text-color: #f1f1f1;
+    --ion-text-color-rgb: 241, 241, 241;
+
+    // Usamos el mismo color, pero nos aseguramos de que el contraste sea negro 
+    --ion-color-primary: #d4af37; // Dorado
+    --ion-color-primary-contrast: #000000;
+    --ion-color-primary-contrast-rgb: 0, 0, 0;
+    
+    // El Rojo Oscuro (Secondary)
+    --ion-color-secondary: #86461ec0;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  }
+}
+
 ion-title, h1, h2, h3, h4, h5, h6, ion-card-title {
   font-weight: 900; 
   font-style: italic;

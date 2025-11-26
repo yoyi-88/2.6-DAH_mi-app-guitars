@@ -1,8 +1,8 @@
+// Imports de nuestra aplicación
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol, 
   IonButton, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, IonCheckbox, AnimationController, Animation } from '@ionic/angular/standalone';
-
-// Imports de nuestra aplicación
+import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
 import { ListItemComponent } from '../components/list-item/list-item.component'; // El componente hijo
 import { CommonModule } from '@angular/common'; // Módulo necesario para usar *ngIf y *ngFor
@@ -12,6 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { AppHeaderComponent } from 'src/app/components/app-header/app-header.component';
 import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item.component";
 
+@Injectable({
+  providedIn: 'root' // Esto le dice a Angular que el servicio es un singleton
+})  
+
+export class MiServicio {
+  constructor() { }
+}
 
 @Component({
   selector: 'app-home',

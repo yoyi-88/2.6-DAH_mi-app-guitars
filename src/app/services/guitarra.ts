@@ -18,6 +18,20 @@ export class GuitarraService {
 
   constructor() { }
 
+  getGuitarras(): Guitarra[] {
+    // Retornamos una copia o la lista, dependiendo de si quieres que sea mutable.
+    return this.listaDeGuitarras; 
+  }
+
+  anadirGuitarra(nuevaGuitarra: Guitarra): void {
+    const guitarraConId: Guitarra = {
+      ...nuevaGuitarra,
+      id: Date.now() 
+    };
+    
+    this.listaDeGuitarras.unshift(guitarraConId);
+  }
+
 
   
 }

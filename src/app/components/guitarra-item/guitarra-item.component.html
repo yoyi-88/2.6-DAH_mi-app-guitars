@@ -11,7 +11,7 @@
       </p>
     </ion-label>
 
-    <ion-button slot="end" fill="outline" (click)="mostrarDetalles()">
+    <ion-button slot="end" fill="outline"  [routerLink]="['/ver-detalles-guitarra', guitarra.id]">
       Ver
     </ion-button>
   </ion-item>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,22 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private settingsService: SettingsService) {}
+
+  // Angular ejecutará este método automáticamente al iniciar, 
+  // aunque no implementemos la interfaz OnInit explícitamente.
+  // ¡IMPORTANTE! Añadimos 'async' para esperar a la base de datos.
+  async ngOnInit() {
+    await this.cargarPreferencias();
+  }
+
+  async cargarPreferencias() {
+    // Leemos el ajuste guardado
+    const modoOscuro = await this.settingsService.get('modo_oscuro');
+    
+    // Si era true, activamos el modo oscuro inmediatamente
+    if (modoOscuro) {
+      document.body.classList.add('dark');
+    }
+  }
 }

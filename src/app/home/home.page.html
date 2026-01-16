@@ -3,8 +3,14 @@
     <ion-title>Galería de Guitarras</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button routerLink="/about" routerDirection="forward">
+      <ion-button (click)="navegarAAbout()" routerDirection="forward">
         <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="navegarASettings()" routerDirection="forward">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   
@@ -14,6 +20,8 @@
 
 <ion-content [fullscreen]="true">
     
+  <h1 style="text-align: center;">{{ saludo }}</h1> 
+
   <ion-grid #profileCard>
 
     <div *ngIf="cargando" class="ion-padding">
@@ -30,7 +38,7 @@
         <ion-col size="12">
           <ion-card>
             <ion-card-header>
-              <ion-card-title>Añadir Nueva Guitarra</ion-card-title>
+              <ion-card-title style="color: goldenrod;">Añadir Nueva Guitarra</ion-card-title>
             </ion-card-header>
             <ion-card-content>
 
@@ -79,7 +87,7 @@
         <ion-row class="ion-padding-horizontal">
           <ion-col size="12" size-md="6" size-lg="4" *ngFor="let guitarra of listaDeGuitarras">
 
-            <ion-card [color]="guitarra.enProduccion ? 'primary' : 'light'" (click)="mostrarDetalles(guitarra)">
+            <ion-card [color]="guitarra.enProduccion ? 'primary' : 'light'">
               <app-guitarra-item [guitarra]="guitarra"></app-guitarra-item>
             </ion-card>
 

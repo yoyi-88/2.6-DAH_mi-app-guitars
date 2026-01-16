@@ -1,23 +1,28 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol, 
-  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, IonCheckbox, AnimationController, Animation, IonIcon } from '@ionic/angular/standalone';
+import {
+  IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
+  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, IonCheckbox, AnimationController, Animation, IonIcon
+} from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
 import { ListItemComponent } from '../components/list-item/list-item.component'; // El componente hijo
 import { CommonModule } from '@angular/common'; // Módulo necesario para usar *ngIf y *ngFor
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import {RouterLink} from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 // Import de nuevo componente app-header
 import { AppHeaderComponent } from 'src/app/components/app-header/app-header.component';
 import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item.component";
 import { GuitarraService } from '../services/guitarra';
+import { SettingsService } from '../services/settings.service';
+
 import { IonicModule } from "@ionic/angular";
+
 
 @Injectable({
   providedIn: 'root' // Esto le dice a Angular que el servicio es un singleton
-})  
+})
 
 export class MiServicio {
   constructor() { }
@@ -42,13 +47,11 @@ export class MiServicio {
 })
 export class HomePage implements AfterViewInit {
 
-  
   public listaDeGuitarras: Guitarra[] = [];
 
   public cargando: boolean = true;
-
-  mostrarDetalles(guitarra: Guitarra) {
-    console.log('Detalles:', guitarra);
+  verDetalle(id: number) {
+    this.router.navigate(['/ver-detalles-guitarra', id]);
   }
 
   public nuevaGuitarra: Guitarra = {
@@ -60,31 +63,92 @@ export class HomePage implements AfterViewInit {
     enProduccion: false
   };
 
-
+  saludo: string = 'Hola';
   constructor(
     private toastController: ToastController,
     private alertController: AlertController,
     // 3. Inyectamos el AnimationController
     private animationCtrl: AnimationController,
-    private guitarraService: GuitarraService
-    
-    
-  ) { // Simulamos una carga de datos de 2 segundos
-    this.listaDeGuitarras = this.guitarraService.getGuitarras();
+    private guitarraService: GuitarraService,
+    private router: Router,
+    private settingsService: SettingsService
 
-    setTimeout(() => {
-      this.cargando = false; // Cambiamos el estado a "cargado"
-    }, 2000)
+
+  ) { // Simulamos una carga de datos de 2 segundos
+
+
+  }
+
+  // Este hook se ejecuta cada vez que la página está a punto de mostrarse
+  ionViewWillEnter() {
+    this.cargarDatos();
+  }
+
+  async cargarDatos() {
+    this.cargando = true; // Activar el spinner
+    
+    // 1. Cargar datos de personalización
+    await this.cargarSaludo();
+    
+    // 2. Cargar guitarras (USANDO AWAIT para obtener el valor del Promise)
+    await this.cargarGuitarras(); 
+
+    // 3. Simular la duración mínima de carga (para UX)
+    await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 segundos
+
+    this.cargando = false; // Desactivar el spinner
+  }
+
+  async cargarGuitarras() {
+     // Usamos AWAIT para obtener el array final y no el Promise<Guitarra[]>
+    this.listaDeGuitarras = await this.guitarraService.getGuitarras();
+  }
+
+  async cargarSaludo() {
+    await this.settingsService.init();
+    const nombre = await this.settingsService.get('nombre_usuario');
+
+    if (nombre && nombre.trim() !== '') {
+      this.saludo = `Hola, ${nombre}`;
+    } else {
+      this.saludo = 'Bienvenido/a';
+    }
+  }
+
+
+
+  navegarAAbout() {
+    console.log("Realizando operaciones previas...");
+
+    // Aquí iría tu lógica (ej: guardar datos, validar...)
+
+    console.log("Navegando a la página About...");
+
+    // 3. Usamos el método .navigate()
+    // Acepta un array con los fragmentos de la ruta
+    this.router.navigate(['/about']);
+  }
+
+  navegarASettings() {
+    console.log("Realizando operaciones previas...");
+
+    // Aquí iría tu lógica (ej: guardar datos, validar...)
+
+    console.log("Navegando a la página About...");
+
+    // 3. Usamos el método .navigate()
+    // Acepta un array con los fragmentos de la ruta
+    this.router.navigate(['/ajustes']);
   }
 
   async confirmarYAgregar() {
-    
+
     // 1. VALIDACIÓN PREVIA (NO SE MUESTRA ALERTA SI NO HAY DATOS)
     if (this.nuevaGuitarra.nombre.trim().length === 0 || this.nuevaGuitarra.corte.trim().length === 0) {
       this.mostrarToast("⚠️ Debes rellenar Nombre y Corte para continuar.", 'danger');
-      return; 
+      return;
     }
-    
+
     // 2. MOSTRAR ALERTA
     const alert = await this.alertController.create({
       header: 'Confirmación',
@@ -104,7 +168,7 @@ export class HomePage implements AfterViewInit {
         },
       ],
     });
-    
+
     await alert.present();
 
     // 3. ESPERAR RESULTADO
@@ -114,15 +178,15 @@ export class HomePage implements AfterViewInit {
     if (role === 'confirm') {
       this._ejecutarAdicion(); // <--- Llamada a la función que SÍ añade la guitarra
     }
-}
+  }
 
   // --- Métodos para Toast y Alert ---
   async mostrarToast(message: string, color: string = 'primary') {
     const toast = await this.toastController.create({
       message: message,
-      duration: 3000, 
-      position: 'bottom', 
-      color: color, 
+      duration: 3000,
+      position: 'bottom',
+      color: color,
       buttons: [
         {
           text: 'OK',
@@ -131,13 +195,17 @@ export class HomePage implements AfterViewInit {
       ]
     });
     await toast.present();
-}
+  }
 
-  private _ejecutarAdicion() {
+  private async _ejecutarAdicion() {
 
     const nombreGuitarra = this.nuevaGuitarra.nombre; // Guardamos el nombre antes de resetear
 
-    this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
+    // 1. Usamos AWAIT porque anadirGuitarra ahora es async
+    await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
+    
+    // 2. Recargamos la lista para ver el elemento recién añadido
+    await this.cargarGuitarras();
 
     // resetear
     this.nuevaGuitarra = {
@@ -157,7 +225,7 @@ export class HomePage implements AfterViewInit {
   @ViewChild('profileCard', { read: ElementRef }) profileCard!: ElementRef;
   private animacion!: Animation;
 
-  
+
 
   // 4. Este método se ejecuta cuando la vista ya está lista
   ngAfterViewInit() {
@@ -168,7 +236,7 @@ export class HomePage implements AfterViewInit {
       .duration(800) // Duración de 800ms
       .fromTo('transform', 'translateX(-100px)', 'translateX(0px)') // Mover de -100px a 0px en el eje X
       .fromTo('opacity', '0', '1'); // Cambiar opacidad de 0 a 1 (fundido)
-    
+
     // 6. Ejecutamos la animación
     this.animacion.play();
   }

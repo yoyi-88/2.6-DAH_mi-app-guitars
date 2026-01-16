@@ -1,0 +1,21 @@
+img {
+    max-width: 500px; 
+    height: auto; 
+    border-radius: 20px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    margin-bottom: 16px;
+}
+
+.fondo-paisley {
+  /* 1. Usar la variable CSS de Ionic para el fondo */
+  --background: url('/assets/images/paisley.jpg') no-repeat center center / cover;
+  
+  /* 2. Propiedades de CSS tradicionales (opcional si ya usaste la variable) */
+  background-image: url('/assets/images/paisley.jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+ion-list {
+  border-radius: 30px;
+}

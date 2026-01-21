@@ -37,6 +37,15 @@ export class VerDetallesGuitarraPage implements OnInit {
     // Convertir a número si existe, o null
     this.guitarraId = id ? Number(id) : null; 
 
+    if (id) {
+      try {
+        // Esperamos la respuesta del servidor
+        this.guitarra = await this.guitarraService.getGuitarraPorId(id);
+      } catch (error) {
+        console.error('Tarea no encontrada', error);
+      }
+    }
+
     if (this.guitarraId !== null) {
       // Usar el ID para buscar la guitarra
       this.guitarra = await this.guitarraService.getGuitarraPorId(this.guitarraId);

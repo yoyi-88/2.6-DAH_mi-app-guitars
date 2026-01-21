@@ -1,75 +1,123 @@
 {
-    "guitarras": [
-        {
-            "id": 1,
-            "imagen": "assets/images/fender.webp",
-            "nombre": "Fender Stratocaster",
-            "corte": "Strat",
-            "anio": 1954,
-            "enProduccion": true
-        },
-        {
-            "id": 2,
-            "imagen": "assets/images/lesPaul.webp",
-            "nombre": "Gibson Les Paul Standard",
-            "corte": "Single Cut",
-            "anio": 1952,
-            "enProduccion": true
-        },
-        {
-            "id": 3,
-            "imagen": "assets/images/ibanez.webp",
-            "nombre": "Ibanez RG550",
-            "corte": "Superstrat",
-            "anio": 1987,
-            "enProduccion": true
-        },
-        {
-            "id": 4,
-            "imagen": "assets/images/sg.jpg",
-            "nombre": "Gibson SG",
-            "corte": "Double Cut",
-            "anio": 1961,
-            "enProduccion": true
-        },
-        {
-            "id": 5,
-            "imagen": "assets/images/telecaster.webp",
-            "nombre": "Fender Telecaster",
-            "corte": "Single Cut",
-            "anio": 1950,
-            "enProduccion": true
-        },
-        {
-            "id": 6,
-            "imagen": "assets/images/superStrat.webp",
-            "nombre": "Jackson Soloist",
-            "corte": "Superstrat",
-            "anio": 1984,
-            "enProduccion": true
-        },
-        {
-            "id": 7,
-            "imagen": "assets/images/falcon.webp",
-            "nombre": "Gretsch White Falcon",
-            "corte": "Hollow Body",
-            "anio": 1955,
-            "enProduccion": false
-        },
-        {
-            "id": 8,
-            "imagen": "assets/images/prs.jpg",
-            "nombre": "PRS Custom 24",
-            "corte": "Double Cut",
-            "anio": 1985,
-            "enProduccion": true
-        }
-    ],
-    "usuarios": [
-        {
-            "id": "1",
-            "nombre": "Yoel",
-            "rol": "admin"
-        }
-    ]
+  "guitarras": [
+    {
+      "id": "1",
+      "imagen": "assets/images/fender.webp",
+      "nombre": "Fender Stratocaster",
+      "corte": "Strat",
+      "anio": 1954,
+      "enProduccion": true
+    },
+    {
+      "id": "2",
+      "imagen": "assets/images/lesPaul.webp",
+      "nombre": "Gibson Les Paul Standard",
+      "corte": "Single Cut",
+      "anio": 1952,
+      "enProduccion": true
+    },
+    {
+      "id": "3",
+      "imagen": "assets/images/ibanez.webp",
+      "nombre": "Ibanez RG550",
+      "corte": "Superstrat",
+      "anio": 1987,
+      "enProduccion": true
+    },
+    {
+      "id": "4",
+      "imagen": "assets/images/sg.jpg",
+      "nombre": "Gibson SG",
+      "corte": "Double Cut",
+      "anio": 1961,
+      "enProduccion": true
+    },
+    {
+      "id": "5",
+      "imagen": "assets/images/telecaster.webp",
+      "nombre": "Fender Telecaster",
+      "corte": "Single Cut",
+      "anio": 1950,
+      "enProduccion": true
+    },
+    {
+      "id": "6",
+      "imagen": "assets/images/superStrat.webp",
+      "nombre": "Jackson Soloist",
+      "corte": "Superstrat",
+      "anio": 1984,
+      "enProduccion": true
+    },
+    {
+      "id": "7",
+      "imagen": "assets/images/falcon.webp",
+      "nombre": "Gretsch White Falcon",
+      "corte": "Hollow Body",
+      "anio": 1955,
+      "enProduccion": false
+    },
+    {
+      "id": "8",
+      "imagen": "assets/images/prs.jpg",
+      "nombre": "PRS Custom 24",
+      "corte": "Double Cut",
+      "anio": 1985,
+      "enProduccion": true
+    },
+    {
+      "id": "cb89",
+      "imagen": "",
+      "nombre": "df",
+      "corte": "fg",
+      "anio": 0,
+      "enProduccion": false
+    },
+    {
+      "id": "3b09",
+      "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_947523-MLA31094143009_062019-F.webpv",
+      "nombre": "bajolele",
+      "corte": "bajo",
+      "anio": 1500,
+      "enProduccion": true
+    },
+    {
+      "id": "1e91",
+      "imagen": "",
+      "nombre": "asdf",
+      "corte": "asdf",
+      "anio": 3,
+      "enProduccion": true
+    },
+    {
+      "id": "c588",
+      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
+      "nombre": "asdf",
+      "corte": "asdf",
+      "anio": 3,
+      "enProduccion": true
+    },
+    {
+      "id": "ea87",
+      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
+      "nombre": "asdf",
+      "corte": "asdf",
+      "anio": 4,
+      "enProduccion": true
+    },
+    {
+      "id": "7c4f",
+      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
+      "nombre": "asdf",
+      "corte": "asdf",
+      "anio": 0,
+      "enProduccion": true
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Yoel",
+      "rol": "admin"
+    }
+  ]
 }

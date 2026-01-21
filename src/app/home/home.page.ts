@@ -20,6 +20,7 @@ import { SettingsService } from '../services/settings.service';
 import { IonicModule } from "@ionic/angular";
 
 
+
 @Injectable({
   providedIn: 'root' // Esto le dice a Angular que el servicio es un singleton
 })
@@ -48,22 +49,9 @@ export class MiServicio {
 export class HomePage implements AfterViewInit {
 
   public listaDeGuitarras: Guitarra[] = [];
-
   public cargando: boolean = true;
-  verDetalle(id: number) {
-    this.router.navigate(['/ver-detalles-guitarra', id]);
-  }
-
-  public nuevaGuitarra: Guitarra = {
-    id: 0, // Daremos un ID real al añadirla
-    imagen: "", // Enlazaremos esto al input
-    nombre: "",
-    corte: "",
-    anio: 0,
-    enProduccion: false
-  };
-
   saludo: string = 'Hola';
+
   constructor(
     private toastController: ToastController,
     private alertController: AlertController,
@@ -79,10 +67,37 @@ export class HomePage implements AfterViewInit {
 
   }
 
-  // Este hook se ejecuta cada vez que la página está a punto de mostrarse
-  ionViewWillEnter() {
-    this.cargarDatos();
+  
+
+  public nuevaGuitarra: Guitarra = {
+    id: 0, // Daremos un ID real al añadirla
+    imagen: "", // Enlazaremos esto al input
+    nombre: "",
+    corte: "",
+    anio: 0,
+    enProduccion: false
+  };
+
+  
+  
+
+  // Usamos ionViewWillEnter en lugar de ngOnInit
+  async ionViewWillEnter() {
+    await this.cargarDatos();
+
+    
   }
+
+  async cargarGuitarras() {
+    try {
+      // Ahora debemos esperar (await) a que lleguen los datos del servidor
+      this.listaDeGuitarras = await this.guitarraService.getGuitarras();
+    } catch (error) {
+      this.mostrarToast('Error al conectar con el servidor', 'danger');
+      // Aquí podríamos mostrar un Toast indicando el error
+    }
+  }
+
 
   async cargarDatos() {
     this.cargando = true; // Activar el spinner
@@ -99,10 +114,21 @@ export class HomePage implements AfterViewInit {
     this.cargando = false; // Desactivar el spinner
   }
 
-  async cargarGuitarras() {
-     // Usamos AWAIT para obtener el array final y no el Promise<Guitarra[]>
-    this.listaDeGuitarras = await this.guitarraService.getGuitarras();
+  private async _ejecutarAdicion() {
+
+    try {
+      await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
+      this.mostrarToast(`✅ "${this.nuevaGuitarra.nombre}" guardada en el servidor.`);
+      
+      // Reset y recarga
+      this.nuevaGuitarra = { id: 0, imagen: "", nombre: "", corte: "", anio: 0, enProduccion: false };
+      await this.cargarGuitarras();
+    } catch (error) {
+      this.mostrarToast('Error al guardar en el servidor', 'danger');
+    }
   }
+
+  
 
   async cargarSaludo() {
     await this.settingsService.init();
@@ -145,9 +171,12 @@ export class HomePage implements AfterViewInit {
 
     // 1. VALIDACIÓN PREVIA (NO SE MUESTRA ALERTA SI NO HAY DATOS)
     if (this.nuevaGuitarra.nombre.trim().length === 0 || this.nuevaGuitarra.corte.trim().length === 0) {
+      
       this.mostrarToast("⚠️ Debes rellenar Nombre y Corte para continuar.", 'danger');
       return;
     }
+
+    
 
     // 2. MOSTRAR ALERTA
     const alert = await this.alertController.create({
@@ -174,6 +203,10 @@ export class HomePage implements AfterViewInit {
     // 3. ESPERAR RESULTADO
     const { role } = await alert.onDidDismiss();
 
+    if (this.nuevaGuitarra.imagen.trim().length === 0) {
+      this.nuevaGuitarra.imagen = 'https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467';
+    }
+
     // 4. EJECUTAR SI ES ACEPTAR
     if (role === 'confirm') {
       this._ejecutarAdicion(); // <--- Llamada a la función que SÍ añade la guitarra
@@ -197,29 +230,7 @@ export class HomePage implements AfterViewInit {
     await toast.present();
   }
 
-  private async _ejecutarAdicion() {
-
-    const nombreGuitarra = this.nuevaGuitarra.nombre; // Guardamos el nombre antes de resetear
-
-    // 1. Usamos AWAIT porque anadirGuitarra ahora es async
-    await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
-    
-    // 2. Recargamos la lista para ver el elemento recién añadido
-    await this.cargarGuitarras();
-
-    // resetear
-    this.nuevaGuitarra = {
-      id: 0,
-      imagen: "",
-      nombre: "",
-      corte: "",
-      anio: 0,
-      enProduccion: false
-    };
-
-    // Llamar al Toast de éxito
-    this.mostrarToast(`✅ Guitarra "${nombreGuitarra}" añadida con éxito.`);
-  }
+  
 
   // 2. Obtenemos la referencia al elemento #profileCard del HTML
   @ViewChild('profileCard', { read: ElementRef }) profileCard!: ElementRef;
@@ -240,6 +251,8 @@ export class HomePage implements AfterViewInit {
     // 6. Ejecutamos la animación
     this.animacion.play();
   }
+
+   
 
 
 }

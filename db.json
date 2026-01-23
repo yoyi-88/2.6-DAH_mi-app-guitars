@@ -3,9 +3,9 @@
     {
       "id": "1",
       "imagen": "assets/images/fender.webp",
-      "nombre": "Fender Stratocaster",
-      "corte": "Strat",
-      "anio": 1954,
+      "nombre": "Fender Strato",
+      "corte": "Stratiiiiii",
+      "anio": "19546666666666666",
       "enProduccion": true
     },
     {
@@ -13,7 +13,7 @@
       "imagen": "assets/images/lesPaul.webp",
       "nombre": "Gibson Les Paul Standard",
       "corte": "Single Cut",
-      "anio": 1952,
+      "anio": "1952",
       "enProduccion": true
     },
     {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonBadge, IonList, IonItem, IonLabel, AlertController, ToastController, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonBadge, IonList, IonItem, IonLabel, AlertController, ToastController, IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
 import { GuitarraService } from 'src/app/services/guitarra';
 import {Guitarra} from 'src/app/interfaces/guitarra';
 import { SettingsService } from 'src/app/services/settings.service'; 
@@ -13,7 +13,7 @@ import { of, take } from 'rxjs';
   templateUrl: './ver-detalles-guitarra.page.html',
   styleUrls: ['./ver-detalles-guitarra.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonItem, IonList, IonBadge, IonBackButton, IonButtons, RouterLink, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonIcon],
+  imports: [IonLabel, IonItem, IonList, IonBadge, IonBackButton, IonButtons, RouterLink, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonIcon, IonInput],
 })
 export class VerDetallesGuitarraPage implements OnInit {
 
@@ -124,7 +124,34 @@ export class VerDetallesGuitarraPage implements OnInit {
     });
     await toast.present();
   }
+
+  alternarEstado() {
+    if (this.guitarra) {
+      // Invertimos el valor booleano
+      this.guitarra.enProduccion = !this.guitarra.enProduccion;
+      
+      // Opcional: Si quieres que se guarde en el servidor inmediatamente al hacer clic:
+      // this.guardarCambios(); 
+    }
+  }
+
+  async guardarCambios() {
+  if (!this.guitarra) return;
+
+  try {
+    await this.guitarraService.updateGuitarra(this.guitarra);
+    const toast = await this.toastController.create({
+      message: 'Cambios guardados con éxito',
+      duration: 2000,
+      color: 'success'
+    });
+    await toast.present();
+  } catch (error) {
+    console.error('Error al actualizar:', error);
+  }
 }
+}
+
 
 
 

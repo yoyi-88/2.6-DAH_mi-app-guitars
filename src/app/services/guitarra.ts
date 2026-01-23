@@ -52,7 +52,7 @@ export class GuitarraService {
    * Actualiza una guitarra existente (PUT /guitarras/ID)
    * Se envía el objeto completo con los cambios ya aplicados.
    */
-  async updateguitarra(guitarra: Guitarra): Promise<Guitarra> {
+  async updateGuitarra(guitarra: Guitarra): Promise<Guitarra> {
     // Construimos la URL específica con el ID de la guitarra
     const urlEspecifica = `${this._url}/${guitarra.id}`;
 

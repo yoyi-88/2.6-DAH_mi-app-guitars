@@ -19,3 +19,35 @@ img {
 ion-list {
   border-radius: 30px;
 }
+
+.input-titulo {
+  --color: var(--ion-text-color); // Usa el color depende del modo
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.5rem; // Tamaño similar a un h1
+  text-align: center;
+  
+  // Para centrar el texto dentro del input de Ionic
+  input {
+    text-align: center !important;
+  }
+}
+
+.input-text {
+  --color:  var(--ion-text-color);
+  font-style: italic;
+  filter: brightness(65%);
+}
+
+ion-badge {
+  transition: transform 0.2s ease;
+  &:active {
+    transform: scale(0.9); // Efecto de pulsación
+  }
+}
+
+.botonGuardar {
+  --color:  var(--ion-text-color);
+  font-style: italic;
+  border-radius: 100px;
+}

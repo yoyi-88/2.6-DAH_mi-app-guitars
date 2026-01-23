@@ -5,11 +5,7 @@
     </ion-buttons>
     <ion-title>{{ guitarra ? guitarra.nombre : 'Detalle de Guitarra' }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button 
-        color="danger" 
-        (click)="confirmarYEliminar()"
-        [disabled]="!guitarra"
-      >
+      <ion-button color="danger" (click)="confirmarYEliminar()" [disabled]="!guitarra">
         <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,54 +13,57 @@
 </ion-header>
 
 <ion-content class="ion-padding fondo-paisley">
-  
+
   <div *ngIf="guitarra; else noEncontrada">
-    
+
     <div class="ion-text-center">
-      
+
 
       <img [src]="guitarra.imagen" alt="{{ guitarra.nombre }}">
 
     </div>
-    
-    
+
+
     <ion-list>
 
       <ion-item>
-        <ion-label>
-          <h1 class="ion-text-center">{{ guitarra.nombre }}</h1>
-        </ion-label>
+        <ion-input class="input-titulo" style="font-size: 30px;" [(ngModel)]="guitarra.nombre"></ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label>
           <h3>Corte</h3>
-          <p>{{ guitarra.corte }}</p>
+          <ion-input class="input-text" [(ngModel)]="guitarra.corte"></ion-input>
         </ion-label>
       </ion-item>
-      
+
       <ion-item>
         <ion-label>
           <h3>Año de Introducción</h3>
-          <p>{{ guitarra.anio }}</p>
+          <ion-input class="input-text" [(ngModel)]="guitarra.anio"></ion-input>
         </ion-label>
       </ion-item>
-      
+
       <ion-item>
         <ion-label>
-          <h3>Estado</h3>
+          <h3>Estado (Haz clic para cambiar)</h3>
           <p>
-            <ion-badge [color]="guitarra.enProduccion ? 'success' : 'danger'">
+            <ion-badge [color]="guitarra.enProduccion ? 'success' : 'danger'" (click)="alternarEstado()"
+              style="cursor: pointer;">
               {{ guitarra.enProduccion ? 'En Producción' : 'Descontinuada' }}
             </ion-badge>
           </p>
         </ion-label>
       </ion-item>
-      
+
       <ion-item lines="none">
         <ion-label color="medium"><small>ID: {{ guitarra.id }}</small></ion-label>
       </ion-item>
-      
+
+      <ion-item>
+        <ion-button style="background-color: green;" class="botonGuardar" (click)="guardarCambios()">Guardar</ion-button>
+      </ion-item>
+
     </ion-list>
   </div>
 

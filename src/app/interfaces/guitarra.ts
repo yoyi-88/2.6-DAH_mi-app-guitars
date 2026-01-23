@@ -1,5 +1,5 @@
 export interface Guitarra {
-    id: number;
+    id: number | string;
     imagen: string;
     nombre: string;
     corte: string;

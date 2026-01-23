@@ -65,51 +65,11 @@
       "enProduccion": true
     },
     {
-      "id": "cb89",
-      "imagen": "",
-      "nombre": "df",
-      "corte": "fg",
-      "anio": 0,
-      "enProduccion": false
-    },
-    {
       "id": "3b09",
       "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_947523-MLA31094143009_062019-F.webpv",
       "nombre": "bajolele",
       "corte": "bajo",
       "anio": 1500,
-      "enProduccion": true
-    },
-    {
-      "id": "1e91",
-      "imagen": "",
-      "nombre": "asdf",
-      "corte": "asdf",
-      "anio": 3,
-      "enProduccion": true
-    },
-    {
-      "id": "c588",
-      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
-      "nombre": "asdf",
-      "corte": "asdf",
-      "anio": 3,
-      "enProduccion": true
-    },
-    {
-      "id": "ea87",
-      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
-      "nombre": "asdf",
-      "corte": "asdf",
-      "anio": 4,
-      "enProduccion": true
-    },
-    {
-      "id": "7c4f",
-      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
-      "nombre": "asdf",
-      "corte": "asdf",
-      "anio": 0,
       "enProduccion": true
     }
   ],

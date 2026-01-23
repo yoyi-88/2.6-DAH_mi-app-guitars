@@ -19,7 +19,7 @@ export class VerDetallesGuitarraPage implements OnInit {
 
   guitarra: Guitarra | undefined;
 
-  guitarraId: number | null = null;
+  guitarraId: string | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute, // Inyectar ActivatedRoute
@@ -35,12 +35,12 @@ export class VerDetallesGuitarraPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     
     // Convertir a número si existe, o null
-    this.guitarraId = id ? Number(id) : null; 
+    this.guitarraId = id; 
 
-    if (id) {
+    if (this.guitarraId) {
       try {
         // Esperamos la respuesta del servidor
-        this.guitarra = await this.guitarraService.getGuitarraPorId(id);
+        this.guitarra = await this.guitarraService.getGuitarraPorId(this.guitarraId);
       } catch (error) {
         console.error('Tarea no encontrada', error);
       }

@@ -12,7 +12,7 @@ export class GuitarraService {
   // Asegúrate de que '/guitarras' coincide con la colección en tu db.json
   private _url = 'http://localhost:3000/guitarras';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Obtiene todas las guitarras del servidor (GET /guitarras)
@@ -36,19 +36,24 @@ export class GuitarraService {
   /**
    * POST: Añade una nueva guitarra al servidor
    */
-  async anadirGuitarra(nuevaGuitarra: Guitarra): Promise<Guitarra> {
-    // Ya no usamos Date.now() para el ID, el servidor (JSON Server) 
-    // lo genera automáticamente si se lo enviamos sin ID.
-    const { id, ...guitarraSinId } = nuevaGuitarra; 
-    return firstValueFrom(this.http.post<Guitarra>(this._url, guitarraSinId));
+  async anadirGuitarra(guitarra : any): Promise<Guitarra> {
+    // 1. Eliminamos el ID temporal (0) antes de enviar
+    //    Creamos una copia del objeto sin el campo 'id' para que JSON Server lo genere limpio.
+    const { id, ...guitarraSinId } = guitarra;
+
+    // 2. Hacemos la petición POST enviando el objeto limpio
+    // Parámetros: URL de la colección y el objeto a crear (body).
+    return firstValueFrom(
+      this.http.post<Guitarra>(this._url, guitarraSinId)
+    );
   }
 
   /**
    * Actualiza una guitarra existente (PUT /guitarras/ID)
    * Se envía el objeto completo con los cambios ya aplicados.
    */
-  async updateTarea(guitarra: Guitarra): Promise<Guitarra> {
-    // Construimos la URL específica con el ID de la tarea
+  async updateguitarra(guitarra: Guitarra): Promise<Guitarra> {
+    // Construimos la URL específica con el ID de la guitarra
     const urlEspecifica = `${this._url}/${guitarra.id}`;
 
     // Hacemos la petición PUT enviando el objeto modificado
@@ -56,18 +61,18 @@ export class GuitarraService {
       this.http.put<Guitarra>(urlEspecifica, guitarra)
     );
   }
-  
+
 
   /**
    * Elimina una guitarra por su ID (DELETE /guitarras/ID)
    */
   async deleteGuitarra(id: string | number): Promise<void> {
     const urlEspecifica = `${this._url}/${id}`;
-    
+
     // Hacemos la petición DELETE. No enviamos body.
     // firstValueFrom convierte el Observable en Promesa.
     return firstValueFrom(
       this.http.delete<void>(urlEspecifica)
-    );
+    );  
   }
 }

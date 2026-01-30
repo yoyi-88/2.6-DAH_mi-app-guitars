@@ -3,6 +3,8 @@ import { Guitarra } from '../interfaces/guitarra';
 import { SettingsService } from './settings.service'; // Importamos SettingsService
 import { HttpClient } from '@angular/common/http'; // Importar HttpClient
 import { firstValueFrom } from 'rxjs';             // Importar utilidad para Promesas
+import { environment } from 'src/environments/environment'; // Importamos el entorno
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { firstValueFrom } from 'rxjs';             // Importar utilidad para Pro
 export class GuitarraService {
   // Definimos la URL base de nuestra API (OJO: puerto 3000 por defecto de JSON Server)
   // Asegúrate de que '/guitarras' coincide con la colección en tu db.json
-  private _url = 'http://localhost:3000/guitarras';
+  private _url = `${environment.apiUrl}/guitarras`;
 
   constructor(private http: HttpClient) { }
 

@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
-  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, IonCheckbox, AnimationController, Animation, IonIcon
+  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, 
+  IonCheckbox, AnimationController, Animation, IonIcon, LoadingController, 
 } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
@@ -59,7 +60,8 @@ export class HomePage implements AfterViewInit {
     private animationCtrl: AnimationController,
     private guitarraService: GuitarraService,
     private router: Router,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private loadingCtrl: LoadingController // Inyectamos Loading
 
 
   ) { // Simulamos una carga de datos de 2 segundos
@@ -89,12 +91,22 @@ export class HomePage implements AfterViewInit {
   }
 
   async cargarGuitarras() {
+    // Creamos y mostramos el loading
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando guitarras...',
+      spinner: 'crescent' // 'circles', 'dots', 'crescent'...
+    });
+    await loading.present();
+
     try {
       // Ahora debemos esperar (await) a que lleguen los datos del servidor
       this.listaDeGuitarras = await this.guitarraService.getGuitarras();
     } catch (error) {
-      this.mostrarToast('Error al conectar con el servidor', 'danger');
+      this.mostrarError('Error al conectar con el servidor');
       // Aquí podríamos mostrar un Toast indicando el error
+    } finally {
+      // IMPORTANTE: Siempre ocultamos el loading al terminar
+      loading.dismiss();
     }
   }
 
@@ -115,6 +127,14 @@ export class HomePage implements AfterViewInit {
   }
 
   private async _ejecutarAdicion() {
+    // Creamos el componente de carga
+    const loading = await this.loadingCtrl.create({
+      message: 'Guardando guitarra en el servidor...',
+      spinner: 'crescent'
+    });
+  
+    // Lo mostramos antes de empezar la petición HTTP 
+    await loading.present();
 
     try {
       await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
@@ -122,9 +142,17 @@ export class HomePage implements AfterViewInit {
       
       // Reset y recarga
       this.nuevaGuitarra = { id: 0, imagen: "", nombre: "", corte: "", anio: 0, enProduccion: false };
+
+      // Cerramos el loading de guardado antes de llamar a cargarGuitarras
+      // (Ya que cargarGuitarras tiene su propio loading interno)
+      await loading.dismiss();
+
       await this.cargarGuitarras();
     } catch (error) {
-      this.mostrarToast('Error al guardar en el servidor', 'danger');
+      // En caso de error, cerramos el loading y avisamos
+      await loading.dismiss();
+      console.error('Error al guardar:', error);
+      this.mostrarError('Error al guardar en el servidor. Inténtelo de nuevo más tarde.');
     }
   }
 
@@ -228,6 +256,17 @@ export class HomePage implements AfterViewInit {
       ]
     });
     await toast.present();
+  }
+
+  // Método auxiliar para mostrar errores
+  async mostrarError(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      color: 'danger',
+      icon: 'alert-circle-outline'
+    });
+    toast.present();
   }
 
   

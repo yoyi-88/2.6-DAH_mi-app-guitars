@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonBadge, IonList, IonItem, IonLabel, AlertController, ToastController, IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonBadge, IonList, IonItem, IonLabel, AlertController, ToastController, IonButton, IonIcon, IonInput, LoadingController } from '@ionic/angular/standalone';
 import { GuitarraService } from 'src/app/services/guitarra';
 import {Guitarra} from 'src/app/interfaces/guitarra';
 import { SettingsService } from 'src/app/services/settings.service'; 
@@ -27,7 +27,8 @@ export class VerDetallesGuitarraPage implements OnInit {
     private router: Router,
     private alertController: AlertController, // Para la Mejora 4 (Confirmación)
     private toastController: ToastController, // Para la Mejora 5 (Error)
-    private settingsService: SettingsService    
+    private settingsService: SettingsService,
+    private loadingController: LoadingController 
    ) {}
 
   async ngOnInit() {
@@ -39,24 +40,18 @@ export class VerDetallesGuitarraPage implements OnInit {
 
     if (this.guitarraId) {
       try {
-        // Esperamos la respuesta del servidor
         this.guitarra = await this.guitarraService.getGuitarraPorId(this.guitarraId);
+        
+        // Si el servidor responde pero el objeto está vacío/null
+        if (!this.guitarra) {
+          this.mostrarErrorYRedirigir();
+        }
       } catch (error) {
-        console.error('Tarea no encontrada', error);
-      }
-    }
-
-    if (this.guitarraId !== null) {
-      // Usar el ID para buscar la guitarra
-      this.guitarra = await this.guitarraService.getGuitarraPorId(this.guitarraId);
-      
-      // Mejora 5 (Manejo de Errores)
-      if (!this.guitarra) {
+        // Si el servidor da error (ej: 404 o conexión perdida)
         this.mostrarErrorYRedirigir();
       }
     } else {
-       // Si no hay ID en la URL, también es un error
-       this.mostrarErrorYRedirigir();
+      this.mostrarErrorYRedirigir();
     }
   }
 
@@ -109,20 +104,32 @@ export class VerDetallesGuitarraPage implements OnInit {
   async ejecutarBorradoYRedireccion() {
     if (this.guitarraId === null) return; 
 
-    // **Lógica de Borrado Real**
-    // Llama al método de borrado de tu servicio (debes implementarlo en GuitarraService)
-    this.guitarraService.deleteGuitarra(this.guitarraId); 
-    
-    // Redirigir al usuario de vuelta a la lista (/home)
-    await this.router.navigate(['/home']);
-    
-    // (Opcional) Mostrar un toast de éxito después de la redirección
-    const toast = await this.toastController.create({
-      message: `La guitarra #${this.guitarraId} ha sido eliminada.`,
-      duration: 2000,
-      color: 'success'
+    // 1. Crear y mostrar el Loading para bloquear la pantalla
+    const loading = await this.loadingController.create({
+      message: 'Eliminando guitarra del servidor...',
+      spinner: 'crescent'
     });
-    await toast.present();
+    await loading.present();
+
+    try {
+      // Es vital el 'await' para que el loading espere a la respuesta HTTP
+      await this.guitarraService.deleteGuitarra(this.guitarraId);
+
+      // Si tiene éxito, cerramos el loading y mostramos Toast positivo
+      await loading.dismiss();
+      
+      this.mostrarToast(`La guitarra "${this.guitarra?.nombre}" ha sido eliminada.`, 'success');
+
+      // 4. Redirigir al usuario de vuelta a la lista
+      await this.router.navigate(['/home']);
+
+    } catch(error) {
+      await loading.dismiss(); // IMPORTANTE: Cerrar siempre el loading aunque falle
+      
+      console.error('Error al borrar:', error); // Log interno para desarrollo
+      this.mostrarError('No se pudo eliminar la guitarra. Compruebe su conexión al servidor.');
+
+    } 
   }
 
   alternarEstado() {
@@ -136,20 +143,48 @@ export class VerDetallesGuitarraPage implements OnInit {
   }
 
   async guardarCambios() {
-  if (!this.guitarra) return;
+    if (!this.guitarra) return;
 
-  try {
-    await this.guitarraService.updateGuitarra(this.guitarra);
+    const loading = await this.loadingController.create({ message: 'Actualizando datos...' });
+    await loading.present();
+
+    try {
+      await this.guitarraService.updateGuitarra(this.guitarra);
+      this.mostrarToast('Guitarra añadida correctamente');
+    } catch (error) {
+      this.mostrarError('Error al añadir la guitarra. Inténtelo de nuevo más tarde');
+    } finally {
+      await this.router.navigate(['/home']);
+    }
+  }
+
+    // --- Métodos para Toast y Alert ---
+  async mostrarToast(message: string, color: string = 'primary') {
     const toast = await this.toastController.create({
-      message: 'Cambios guardados con éxito',
-      duration: 2000,
-      color: 'success'
+      message: message,
+      duration: 3000,
+      position: 'bottom',
+      color: color,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
     });
     await toast.present();
-  } catch (error) {
-    console.error('Error al actualizar:', error);
   }
-}
+
+  // Método auxiliar para mostrar errores
+  async mostrarError(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      color: 'danger',
+      icon: 'alert-circle-outline'
+    });
+    toast.present();
+  }
 }
 
 

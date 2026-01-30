@@ -3,9 +3,9 @@
     {
       "id": "1",
       "imagen": "assets/images/fender.webp",
-      "nombre": "Fender Strato",
-      "corte": "Stratiiiiii",
-      "anio": "19546666666666666",
+      "nombre": "Fender Stratocaster",
+      "corte": "Strat",
+      "anio": "1954",
       "enProduccion": true
     },
     {

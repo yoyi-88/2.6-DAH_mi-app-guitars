@@ -16,15 +16,23 @@ export class GuitarraService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Obtiene todas las guitarras del servidor (GET /guitarras)
-   */
-  async getGuitarras(): Promise<Guitarra[]> {
-    // Hacemos la petición GET a la URL.
-    // Usamos el genérico <Guitarra[]> para decirle a TypeScript que esperamos un array de Guitarras.
-    // firstValueFrom convierte el Observable en una Promesa.
-    return firstValueFrom(this.http.get<Guitarra[]>(this._url));
-  }
+  async getGuitarras(query: string = '', sort: string = '', order: string = 'asc'): Promise<Guitarra[]> {
+    
+    let url = `${this._url}?`;
+  
+    if (query) {
+      // En JSON Server 1.x, intenta filtrar por el campo directamente.
+      // OJO: Esta versión suele ser Case Sensitive (Fender != fender)
+      url += `nombre=${query}&`; 
+    }
+    
+    // Ordenación: En la v1.x se eliminan los guiones bajos de los parámetros
+    if (sort && sort !== 'id') {
+      url += `_sort=${sort}&_order=${order}`;
+    }
+    console.log('URL construida para GET:', url); // Ver URL final en consola
+    return firstValueFrom(this.http.get<Guitarra[]>(url));
+}
 
   /**
    * Obtiene una guitarra por su ID (GET /guitarras/ID)

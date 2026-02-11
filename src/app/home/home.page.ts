@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
   IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, 
-  IonCheckbox, AnimationController, Animation, IonIcon, LoadingController, 
+  IonCheckbox, AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
@@ -36,7 +36,7 @@ export class MiServicio {
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [IonIcon, IonCheckbox, IonCardContent, IonCardTitle, IonCardHeader, IonImg, IonButton, IonLabel, IonItem, IonCard, IonList,
-    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonButton, // Componentes de Ionic
+    IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonButton,  // Componentes de Ionic
     ListItemComponent, // Nuestro componente hijo
     CommonModule, // El módulo para las directivas estructurales
     AppHeaderComponent, // Nuestro nuevo componente de encabezado
@@ -44,7 +44,8 @@ export class MiServicio {
     FormsModule, IonInput, IonToggle,
     IonSkeletonText, // Componente para hacer la carga
     IonButtons,
-    RouterModule, RouterLink
+    RouterModule, RouterLink,
+    IonSearchbar, IonSelect, IonSelectOption
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -52,6 +53,10 @@ export class HomePage implements AfterViewInit {
   public listaDeGuitarras: Guitarra[] = [];
   public cargando: boolean = true;
   saludo: string = 'Hola';
+  // Variables nuevas en la clase
+  queryBusqueda: string = '';
+  campoOrden: string = 'id';
+  direccionOrden: string = 'asc';
 
   constructor(
     private toastController: ToastController,
@@ -267,6 +272,63 @@ export class HomePage implements AfterViewInit {
       icon: 'alert-circle-outline'
     });
     toast.present();
+  }
+
+  // Método para la búsqueda
+  async buscar(event: any) {
+    const texto = event.target.value; 
+    this.queryBusqueda = texto ? texto.toLowerCase() : '';
+    await this.cargarListaFiltrada();
+  }
+
+  // Método para la ordenación
+  async cambiarOrden(event: any) {
+    const valor = event.detail.value; // Recibe el value del ion-select-option
+    console.log('Cambiando orden a:', valor);
+
+    if (valor === 'id') {
+      // Caso por defecto: Orden original
+      this.campoOrden = 'id';
+      this.direccionOrden = 'asc';
+    } else {
+      // Dividimos el string por el guion. 
+      // Ej: "nombre-asc" -> ["nombre", "asc"]
+      // Ej: "anio-desc"   -> ["anio", "desc"]
+      const partes = valor.split('-');
+      
+      if (partes.length === 2) {
+        this.campoOrden = partes[0];      // "nombre" o "anio"
+        this.direccionOrden = partes[1];  // "asc" o "desc"
+      }
+    }
+    
+    await this.cargarListaFiltrada();
+  }
+
+  // Función unificada para cargar datos con Loading
+  async cargarListaFiltrada() {
+    const loading = await this.loadingCtrl.create({ message: 'Buscando...' });
+    await loading.present();
+
+    try {
+      // 1. Pedimos la lista al servidor (aquí el servidor aplica el ORDEN)
+      const datosServidor = await this.guitarraService.getGuitarras('', this.campoOrden, this.direccionOrden);
+      
+      // 2. Filtramos LOCALMENTE por el texto (para evitar problemas de Case Sensitive del servidor)
+      if (this.queryBusqueda.trim() !== '') {
+        this.listaDeGuitarras = datosServidor.filter(g => 
+          g.nombre.toLowerCase().includes(this.queryBusqueda.toLowerCase()) ||
+          g.corte.toLowerCase().includes(this.queryBusqueda.toLowerCase())
+        );
+      } else {
+        this.listaDeGuitarras = datosServidor;
+      }
+
+    } catch (error) {
+      this.mostrarError('Error al obtener datos');
+    } finally {
+      loading.dismiss();
+    }
   }
 
   

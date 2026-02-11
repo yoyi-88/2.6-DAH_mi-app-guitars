@@ -18,9 +18,28 @@
 </ion-header>
 
 
+
+
 <ion-content [fullscreen]="true">
     
   <h1 style="text-align: center;">{{ saludo }}</h1> 
+
+  <ion-searchbar 
+    placeholder="Buscar guitarra..." 
+    (ionInput)="buscar($event)" 
+    debounce="500">
+  </ion-searchbar>
+
+  <ion-item>
+    <ion-label>Ordenar por:</ion-label>
+    <ion-select value="id" (ionChange)="cambiarOrden($event)">
+      <ion-select-option value="id">Original</ion-select-option>
+      <ion-select-option value="nombre-asc">Nombre (A-Z)</ion-select-option>
+      <ion-select-option value="nombre-desc">Nombre (Z-A)</ion-select-option>
+      <ion-select-option value="anio-desc">Más nuevas primero</ion-select-option>
+      <ion-select-option value="anio-asc">Más antiguas primero</ion-select-option>
+    </ion-select>
+  </ion-item>
 
   <ion-grid #profileCard>
 

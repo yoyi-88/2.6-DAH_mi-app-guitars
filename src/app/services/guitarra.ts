@@ -4,7 +4,7 @@ import { SettingsService } from './settings.service'; // Importamos SettingsServ
 import { HttpClient } from '@angular/common/http'; // Importar HttpClient
 import { firstValueFrom } from 'rxjs';             // Importar utilidad para Promesas
 import { environment } from 'src/environments/environment'; // Importamos el entorno
-
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +17,26 @@ export class GuitarraService {
   constructor(private http: HttpClient) { }
 
   async getGuitarras(query: string = '', sort: string = '', order: string = 'asc'): Promise<Guitarra[]> {
-    
-    let url = `${this._url}?`;
   
-    if (query) {
-      // En JSON Server 1.x, intenta filtrar por el campo directamente.
-      // OJO: Esta versión suele ser Case Sensitive (Fender != fender)
-      url += `nombre=${query}&`; 
-    }
-    
-    // Ordenación: En la v1.x se eliminan los guiones bajos de los parámetros
-    if (sort && sort !== 'id') {
-      url += `_sort=${sort}&_order=${order}`;
-    }
-    console.log('URL construida para GET:', url); // Ver URL final en consola
-    return firstValueFrom(this.http.get<Guitarra[]>(url));
+  // En JSON Server 1.x:
+  // Orden ascendente: ?_sort=nombre
+  // Orden descendente: ?_sort=-nombre  (Nótese el menos)
+  
+  let url = `${this._url}?`;
+
+  if (query) {
+    url += `q=${query}&`;
+  }
+
+  if (sort && sort !== 'id') {
+    // Si el orden es descendente, añadimos el signo menos delante del campo
+    const parametroSort = (order === 'desc') ? `-${sort}` : sort;
+    url += `_sort=${parametroSort}`;
+  }
+
+  console.log('URL FINAL (Sintaxis 1.x):', url);
+
+  return firstValueFrom(this.http.get<Guitarra[]>(url));
 }
 
   /**

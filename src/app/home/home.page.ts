@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
-  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText, 
+  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText,
   IonCheckbox, AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
@@ -74,7 +74,7 @@ export class HomePage implements AfterViewInit {
 
   }
 
-  
+
 
   public nuevaGuitarra: Guitarra = {
     id: 0, // Daremos un ID real al añadirla
@@ -85,32 +85,33 @@ export class HomePage implements AfterViewInit {
     enProduccion: false
   };
 
-  
-  
+
+
 
   // Usamos ionViewWillEnter en lugar de ngOnInit
   async ionViewWillEnter() {
     await this.cargarDatos();
 
-    
+
   }
 
   async cargarGuitarras() {
-    // Creamos y mostramos el loading
     const loading = await this.loadingCtrl.create({
       message: 'Cargando guitarras...',
-      spinner: 'crescent' // 'circles', 'dots', 'crescent'...
+      spinner: 'crescent'
     });
     await loading.present();
 
     try {
-      // Ahora debemos esperar (await) a que lleguen los datos del servidor
-      this.listaDeGuitarras = await this.guitarraService.getGuitarras();
+      // 👈 CAMBIO AQUÍ: Pasa las variables de clase al servicio
+      this.listaDeGuitarras = await this.guitarraService.getGuitarras(
+        this.queryBusqueda, 
+        this.campoOrden, 
+        this.direccionOrden
+      );
     } catch (error) {
       this.mostrarError('Error al conectar con el servidor');
-      // Aquí podríamos mostrar un Toast indicando el error
     } finally {
-      // IMPORTANTE: Siempre ocultamos el loading al terminar
       loading.dismiss();
     }
   }
@@ -118,12 +119,12 @@ export class HomePage implements AfterViewInit {
 
   async cargarDatos() {
     this.cargando = true; // Activar el spinner
-    
+
     // 1. Cargar datos de personalización
     await this.cargarSaludo();
-    
+
     // 2. Cargar guitarras (USANDO AWAIT para obtener el valor del Promise)
-    await this.cargarGuitarras(); 
+    await this.cargarGuitarras();
 
     // 3. Simular la duración mínima de carga (para UX)
     await new Promise(resolve => setTimeout(resolve, 1500)); // 1.5 segundos
@@ -137,14 +138,14 @@ export class HomePage implements AfterViewInit {
       message: 'Guardando guitarra en el servidor...',
       spinner: 'crescent'
     });
-  
+
     // Lo mostramos antes de empezar la petición HTTP 
     await loading.present();
 
     try {
       await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
       this.mostrarToast(`✅ "${this.nuevaGuitarra.nombre}" guardada en el servidor.`);
-      
+
       // Reset y recarga
       this.nuevaGuitarra = { id: 0, imagen: "", nombre: "", corte: "", anio: 0, enProduccion: false };
 
@@ -161,7 +162,7 @@ export class HomePage implements AfterViewInit {
     }
   }
 
-  
+
 
   async cargarSaludo() {
     await this.settingsService.init();
@@ -204,12 +205,12 @@ export class HomePage implements AfterViewInit {
 
     // 1. VALIDACIÓN PREVIA (NO SE MUESTRA ALERTA SI NO HAY DATOS)
     if (this.nuevaGuitarra.nombre.trim().length === 0 || this.nuevaGuitarra.corte.trim().length === 0) {
-      
+
       this.mostrarToast("⚠️ Debes rellenar Nombre y Corte para continuar.", 'danger');
       return;
     }
 
-    
+
 
     // 2. MOSTRAR ALERTA
     const alert = await this.alertController.create({
@@ -276,62 +277,47 @@ export class HomePage implements AfterViewInit {
 
   // Método para la búsqueda
   async buscar(event: any) {
-    const texto = event.target.value; 
+    const texto = event.target.value;
     this.queryBusqueda = texto ? texto.toLowerCase() : '';
     await this.cargarListaFiltrada();
   }
 
   // Método para la ordenación
   async cambiarOrden(event: any) {
-    const valor = event.detail.value; // Recibe el value del ion-select-option
+    const valor = event.detail.value;
     console.log('Cambiando orden a:', valor);
 
     if (valor === 'id') {
-      // Caso por defecto: Orden original
       this.campoOrden = 'id';
       this.direccionOrden = 'asc';
     } else {
-      // Dividimos el string por el guion. 
-      // Ej: "nombre-asc" -> ["nombre", "asc"]
-      // Ej: "anio-desc"   -> ["anio", "desc"]
       const partes = valor.split('-');
-      
       if (partes.length === 2) {
-        this.campoOrden = partes[0];      // "nombre" o "anio"
-        this.direccionOrden = partes[1];  // "asc" o "desc"
+        // 👈 ASIGNACIÓN CRÍTICA: Aquí actualizamos las variables de clase
+        this.campoOrden = partes[0];
+        this.direccionOrden = partes[1];
       }
     }
-    
+
+    // Ahora que las variables de clase están listas, cargamos
     await this.cargarListaFiltrada();
   }
 
   // Función unificada para cargar datos con Loading
   async cargarListaFiltrada() {
-    const loading = await this.loadingCtrl.create({ message: 'Buscando...' });
-    await loading.present();
+  // Simplemente llamamos al método que ya tiene el loading y la lógica de red
+  await this.cargarGuitarras();
 
-    try {
-      // 1. Pedimos la lista al servidor (aquí el servidor aplica el ORDEN)
-      const datosServidor = await this.guitarraService.getGuitarras('', this.campoOrden, this.direccionOrden);
-      
-      // 2. Filtramos LOCALMENTE por el texto (para evitar problemas de Case Sensitive del servidor)
-      if (this.queryBusqueda.trim() !== '') {
-        this.listaDeGuitarras = datosServidor.filter(g => 
-          g.nombre.toLowerCase().includes(this.queryBusqueda.toLowerCase()) ||
-          g.corte.toLowerCase().includes(this.queryBusqueda.toLowerCase())
-        );
-      } else {
-        this.listaDeGuitarras = datosServidor;
-      }
-
-    } catch (error) {
-      this.mostrarError('Error al obtener datos');
-    } finally {
-      loading.dismiss();
-    }
+  // Si quieres mantener el filtrado local (Híbrido) para la búsqueda:
+  if (this.queryBusqueda.trim() !== '') {
+    this.listaDeGuitarras = this.listaDeGuitarras.filter(g =>
+      g.nombre.toLowerCase().includes(this.queryBusqueda.toLowerCase()) ||
+      g.corte.toLowerCase().includes(this.queryBusqueda.toLowerCase())
+    );
   }
+}
 
-  
+
 
   // 2. Obtenemos la referencia al elemento #profileCard del HTML
   @ViewChild('profileCard', { read: ElementRef }) profileCard!: ElementRef;
@@ -353,7 +339,7 @@ export class HomePage implements AfterViewInit {
     this.animacion.play();
   }
 
-   
+
 
 
 }

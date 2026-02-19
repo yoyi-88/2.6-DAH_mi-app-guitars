@@ -56,11 +56,11 @@ cd nombre-del-proyecto
 # Instalar Ionic CLI de forma global (si no se tiene)
 npm install -g @ionic/cli
 
-# Instalar las dependencias locales del proyecto
+### Instalar las dependencias locales del proyecto
 npm install
 
-#Inicia la base de datos en una terminal independiente:
+### Inicia la base de datos en una terminal independiente:
 npm run api
 
-#Lanzar aplicación
+### Lanzar aplicación
 ionic serve

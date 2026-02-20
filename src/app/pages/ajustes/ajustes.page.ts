@@ -2,24 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote } from '@ionic/angular/standalone';
+import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote, IonCard, IonImg, IonFabButton, IonFab, IonIcon } from '@ionic/angular/standalone';
+import { PhotoService } from '../../services/photo';
+
 
 @Component({
   selector: 'app-ajustes',
   templateUrl: './ajustes.page.html',
   styleUrls: ['./ajustes.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, 
+  imports: [IonIcon, IonFab, IonFabButton, IonImg, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, 
     IonButtons, IonBackButton, 
     IonList, IonListHeader, IonItem, IonLabel, IonToggle, 
-    FormsModule, IonInput, IonNote]
+    FormsModule, IonInput, IonNote, CommonModule]
 })
 export class AjustesPage implements OnInit {
 
   modoOscuro: boolean = false; // Valor por defecto
   nombreUsuario: string = '';
 
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService,
+    public photoService: PhotoService
+  ) { }
 
   // ¡IMPORTANTE! Añadimos 'async' para poder usar 'await' dentro
   async ngOnInit() {
@@ -53,5 +57,9 @@ export class AjustesPage implements OnInit {
     // Añadimos o quitamos la clase 'dark' al body del documento
     // Esto activa los estilos que definiremos en variables.scss
     document.body.classList.toggle('dark', esOscuro);
+  }
+
+  addPhoto() {
+    this.photoService.addNewToGallery();
   }
 }

@@ -33,4 +33,16 @@
       <ion-input [(ngModel)]="nombreUsuario" (ionBlur)="guardarNombre()"></ion-input>
     </ion-item>
   </ion-list>
+
+  <!-- Mostrar la foto si existe -->
+  <ion-card *ngIf="photoService.foto">
+    <ion-img [src]="photoService.foto"></ion-img>
+  </ion-card>
+
+  <!-- Botón Flotante para la Cámara -->
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="addPhoto()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

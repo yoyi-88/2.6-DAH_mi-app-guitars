@@ -67,6 +67,7 @@ export class HomePage implements AfterViewInit {
     private router: Router,
     private settingsService: SettingsService,
     private loadingCtrl: LoadingController // Inyectamos Loading
+    
 
 
   ) { // Simulamos una carga de datos de 2 segundos
@@ -338,6 +339,8 @@ export class HomePage implements AfterViewInit {
     // 6. Ejecutamos la animación
     this.animacion.play();
   }
+
+  
 
 
 

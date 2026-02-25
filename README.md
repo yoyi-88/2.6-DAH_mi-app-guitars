@@ -64,3 +64,17 @@ npm run api
 
 # Lanzar aplicación
 ionic serve
+
+### 📱 Pruebas en Dispositivo Físico
+Para probar la aplicación en un smartphone real durante el desarrollo:
+1. Conectar el dispositivo mediante USB y habilitar "Depuración USB".
+2. Identificar la IP local del servidor (PC) mediante `ipconfig`.
+3. Configurar dicha IP en `environment.prod.ts`.
+4. Ejecutar `ionic cap run android` seleccionando el terminal físico.
+
+## 🌐 Configuración de Red para Dispositivos Reales
+
+Para que la aplicación funcione en un dispositivo físico (Android/iOS), el archivo `environment.prod.ts` debe apuntar a la IP local de la máquina que aloja el servidor `json-server`, incluyendo el puerto correspondiente:
+
+```typescript
+apiUrl: '[http://192.168.](http://192.168.)XX.XX:3000'

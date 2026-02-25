@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote, IonCard, IonImg, IonFabButton, IonFab, IonIcon } from '@ionic/angular/standalone';
+import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote, IonCard, IonImg, IonFabButton, IonFab, IonIcon, IonButton, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { PhotoService } from '../../services/photo';
+import { LocationService } from 'src/app/services/location';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { PhotoService } from '../../services/photo';
   templateUrl: './ajustes.page.html',
   styleUrls: ['./ajustes.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonFab, IonFabButton, IonImg, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, 
+  imports: [IonCardTitle, IonCardHeader, IonCardContent, IonButton, IonIcon, IonFab, IonFabButton, IonImg, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, 
     IonButtons, IonBackButton, 
     IonList, IonListHeader, IonItem, IonLabel, IonToggle, 
     FormsModule, IonInput, IonNote, CommonModule]
@@ -22,7 +23,8 @@ export class AjustesPage implements OnInit {
   nombreUsuario: string = '';
 
   constructor(private settingsService: SettingsService,
-    public photoService: PhotoService
+    public photoService: PhotoService,
+    public locationService: LocationService
   ) { }
 
   // ¡IMPORTANTE! Añadimos 'async' para poder usar 'await' dentro
@@ -62,4 +64,12 @@ export class AjustesPage implements OnInit {
   addPhoto() {
     this.photoService.addNewToGallery();
   }
+
+  async obtenerGPS() {
+  try {
+    await this.locationService.obtenerPosicionActual();
+  } catch (error) {
+    console.log("El usuario denegó el permiso o el GPS está apagado");
+  }
+}
 }

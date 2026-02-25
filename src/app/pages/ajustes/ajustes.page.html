@@ -39,6 +39,34 @@
     <ion-img [src]="photoService.foto"></ion-img>
   </ion-card>
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Mi Ubicación</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p *ngIf="!locationService.latitud">Sin datos GPS</p>
+
+      <div *ngIf="locationService.latitud">
+        <p>Lat: {{ locationService.latitud }}</p>
+        <p>Long: {{ locationService.longitud }}</p>
+
+        <!-- Botón para abrir Google Maps -->
+        <ion-button
+          href="https://www.google.com/maps/search/?api=1&query={{locationService.latitud}},{{locationService.longitud}}"
+          target="_blank">
+          Ver en Mapa
+          <ion-icon name="map" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+
+      <ion-button expand="block" (click)="obtenerGPS()">
+        <ion-icon name="locate" slot="start"></ion-icon>
+        Obtener Coordenadas
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
   <!-- Botón Flotante para la Cámara -->
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="addPhoto()">

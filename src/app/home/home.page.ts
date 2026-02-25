@@ -1,24 +1,20 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
-  IonButton, IonButtons, IonImg, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText,
-  IonCheckbox, AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption
+  IonButton, IonButtons, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText,
+  AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption
 } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
-import { ListItemComponent } from '../components/list-item/list-item.component'; // El componente hijo
 import { CommonModule } from '@angular/common'; // Módulo necesario para usar *ngIf y *ngFor
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
 
 // Import de nuevo componente app-header
-import { AppHeaderComponent } from 'src/app/components/app-header/app-header.component';
 import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item.component";
 import { GuitarraService } from '../services/guitarra';
 import { SettingsService } from '../services/settings.service';
 
-import { IonicModule } from "@ionic/angular";
 
 
 
@@ -35,16 +31,14 @@ export class MiServicio {
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonCheckbox, IonCardContent, IonCardTitle, IonCardHeader, IonImg, IonButton, IonLabel, IonItem, IonCard, IonList,
+  imports: [IonIcon, IonCardContent, IonCardTitle, IonCardHeader, IonButton, IonLabel, IonItem, IonCard, IonList,
     IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonButton,  // Componentes de Ionic
-    ListItemComponent, // Nuestro componente hijo
     CommonModule, // El módulo para las directivas estructurales
-    AppHeaderComponent, // Nuestro nuevo componente de encabezado
     GuitarraItemComponent, // Componente para mostrar cada guitarra
     FormsModule, IonInput, IonToggle,
     IonSkeletonText, // Componente para hacer la carga
     IonButtons,
-    RouterModule, RouterLink,
+    RouterModule,
     IonSearchbar, IonSelect, IonSelectOption
   ],
 })

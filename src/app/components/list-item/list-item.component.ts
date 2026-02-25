@@ -5,13 +5,14 @@ import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { Guitarra } from 'src/app/interfaces/guitarra';
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.scss'],
   // Añadimos esta línea para que el componente pueda usar las etiquetas de Ionic en su HTML
-  imports: [IonicModule]
+  imports: [IonicModule, CommonModule]
 })
 export class ListItemComponent implements OnInit {
 

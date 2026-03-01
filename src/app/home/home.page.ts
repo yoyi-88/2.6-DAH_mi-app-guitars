@@ -19,6 +19,7 @@ import { PhotoService } from '../services/photo';
 
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 
 
@@ -146,6 +147,9 @@ export class HomePage implements AfterViewInit {
 
     try {
       await this.guitarraService.anadirGuitarra(this.nuevaGuitarra);
+      // Mejora: Feedback háptico de éxito 
+      await Haptics.impact({ style: ImpactStyle.Medium });
+      
       this.mostrarToast(`✅ "${this.nuevaGuitarra.nombre}" guardada en el servidor.`);
 
       // Reset y recarga

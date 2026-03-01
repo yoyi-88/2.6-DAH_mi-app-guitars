@@ -4,6 +4,7 @@ import { IonCard, IonItem, IonLabel, IonButton, IonImg, IonIcon, IonButtons, Ion
 import { Guitarra } from 'src/app/interfaces/guitarra';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Share } from '@capacitor/share';
 @Component({
   selector: 'app-guitarra-item',
   standalone: true,
@@ -21,16 +22,28 @@ export class GuitarraItemComponent {
   }
 
   verEnMapa(event: Event) {
-  event.stopPropagation();
-  if (this.guitarra?.lat && this.guitarra?.lng) {
-    const lat = this.guitarra.lat;
-    const lng = this.guitarra.lng;
-    const label = encodeURIComponent(this.guitarra.nombre);
-    
-    // Esta URL es mejor: pone un pin con el nombre de la guitarra en el mapa
-    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-    
-    window.open(url, '_system');
+    event.stopPropagation();
+    if (this.guitarra?.lat && this.guitarra?.lng) {
+      const lat = this.guitarra.lat;
+      const lng = this.guitarra.lng;
+      const label = encodeURIComponent(this.guitarra.nombre);
+      
+      // Esta URL es mejor: pone un pin con el nombre de la guitarra en el mapa
+      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      
+      window.open(url, '_system');
+    }
   }
-}
+
+  async compartirGuitarra(event: Event) {
+    event.stopPropagation();
+    if (this.guitarra) {
+      await Share.share({
+        title: this.guitarra.nombre,
+        text: `Mira esta guitarra: ${this.guitarra.nombre} del año ${this.guitarra.anio}`,
+        url: this.guitarra.imagen,
+        dialogTitle: 'Compartir con amigos',
+      });
+    }
+  }
 }

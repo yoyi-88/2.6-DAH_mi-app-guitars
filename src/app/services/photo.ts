@@ -19,9 +19,6 @@ export class PhotoService {
       quality: 100
     });
 
-    if (capturedPhoto.webPath) {
-      return capturedPhoto.webPath; // 👈 DEVOLVEMOS el valor
-    }
-    return undefined;
+    return capturedPhoto.webPath; // 👈 DEVOLVEMOS el valor
   }
 }

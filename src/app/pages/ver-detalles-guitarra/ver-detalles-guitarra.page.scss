@@ -1,5 +1,8 @@
 img {
-    max-width: 500px; 
+    display: block;       /* Asegura que se comporte como bloque */
+    margin: 0 auto;       /* Fuerza el centrado horizontal */
+    width: 100%;          /* Que intente ocupar el ancho disponible */
+    max-width: 500px;     /* Pero que nunca crezca más de 500px (para escritorio) */
     height: auto; 
     border-radius: 20px; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); 

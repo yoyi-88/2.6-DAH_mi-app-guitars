@@ -87,14 +87,6 @@
       "ubicacionNombre": "Stevensville, Maryland",
       "lat": 38.9807,
       "lng": -76.3149
-    },
-    {
-      "id": "20e4",
-      "imagen": "https://i0.wp.com/cms.babbel.news/wp-content/uploads/2022/06/Spanish_UpsideDown_Punctuation.png?resize=830%2C467",
-      "nombre": "test",
-      "corte": "test",
-      "anio": 0,
-      "enProduccion": false
     }
   ],
   "usuarios": [

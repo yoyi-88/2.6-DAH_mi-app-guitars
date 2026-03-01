@@ -249,6 +249,7 @@ export class HomePage implements AfterViewInit {
 
     // 4. EJECUTAR SI ES ACEPTAR
     if (role === 'confirm') {
+      // Plugin Extra 1: Haptics (Vibración de éxito)
       await Haptics.impact({ style: ImpactStyle.Medium });
       this._ejecutarAdicion(); // <--- Llamada a la función que SÍ añade la guitarra
     }

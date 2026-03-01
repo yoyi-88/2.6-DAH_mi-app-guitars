@@ -87,6 +87,17 @@
       "ubicacionNombre": "Stevensville, Maryland",
       "lat": 38.9807,
       "lng": -76.3149
+    },
+    {
+      "id": "bf8d",
+      "imagen": "http://192.168.18.14:8100/_capacitor_file_/storage/emulated/0/Android/data/io.ionic.starter/files/Pictures/JPEG_20260301_232722_1225086436878419242.jpg",
+      "nombre": "test",
+      "corte": "test",
+      "anio": 0,
+      "enProduccion": false,
+      "ubicacionNombre": "Cádiz",
+      "lat": 36.5297438,
+      "lng": -6.2928976
     }
   ],
   "usuarios": [

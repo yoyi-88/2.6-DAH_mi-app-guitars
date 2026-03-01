@@ -1,12 +1,11 @@
-# 🎸 Galería de Guitarras App - Actualización venidera con ejecutable
+# 🎸 Galería de Guitarras App - Edición Nativa 
 
 [![Ionic](https://img.shields.io/badge/Framework-Ionic%208-blue.svg)](https://ionicframework.com/)
 [![Angular](https://img.shields.io/badge/Lógica-Angular%2018-red.svg)](https://angular.io/)
+[![Capacitor](https://img.shields.io/badge/Native-Capacitor%207-black.svg)](https://capacitorjs.com/)
 [![JSON Server](https://img.shields.io/badge/Backend-JSON--Server--v1.x-green.svg)](https://github.com/typicode/json-server)
 
-Aplicación móvil multiplataforma desarrollada con **Ionic** y **Angular** para la gestión profesional de un catálogo de guitarras. El proyecto implementa una arquitectura orientada a servicios, consumo de APIs REST y una interfaz de usuario reactiva y optimizada.
-
-
+Aplicación móvil nativa desarrollada con **Ionic**, **Angular** y **Capacitor** para la gestión profesional de un catálogo de guitarras. El proyecto ha evolucionado de una SPA web a una solución nativa robusta que integra hardware, persistencia de datos y una interfaz de usuario reactiva de alta fidelidad.
 
 ---
 
@@ -18,29 +17,30 @@ Aplicación móvil multiplataforma desarrollada con **Ionic** y **Angular** para
 * **Update**: Edición en tiempo real de los datos de cada guitarra con sincronización al servidor vía peticiones PUT.
 * **Delete**: Borrado físico de registros con diálogos de confirmación de seguridad y peticiones DELETE.
 
-### 2. Filtrado y Ordenación Avanzada (Mejoras de Rendimiento)
-* **Búsqueda Híbrida**: Sistema que combina peticiones al servidor con un filtrado local mediante `filter()` y `toLowerCase()` para garantizar resultados precisos e insensibles a mayúsculas.
-* **Ordenación Dinámica en Servidor**: Sistema que delega la carga de procesamiento al backend mediante parámetros de URL.
-    * Soporte para orden Alfabético (A-Z / Z-A).
-    * Soporte para orden Cronológico (Más nuevas / Más antiguas).
-    * Implementación de sintaxis compatible con **JSON Server 1.x** utilizando el prefijo `-` para órdenes descendentes (ej: `_sort=-anio`).
+### 2. Integración de Hardware Nativo (Capacitor)
+* **📸 Cámara Pro**: Sistema de captura directa mediante `PhotoService`. Permite digitalizar instrumentos en tiempo real devolviendo rutas `webPath` para previsualización inmediata.
+* **📍 Geolocalización Inteligente**: Implementación de `@capacitor/geolocation`. La app vincula automáticamente coordenadas GPS a cada modelo mediante un sistema de geocodificación inversa basado en el nombre del lugar capturado en el formulario.
+* **📳 Feedback Háptico**: Uso de `@capacitor/haptics` para proporcionar respuestas físicas (`ImpactStyle.Medium`) al confirmar la adición de nuevas guitarras.
+* **📲 Share API**: Integración de `@capacitor/share` para permitir el envío de fichas técnicas y fotos de las guitarras a través de aplicaciones nativas de mensajería.
 
-### 3. Experiencia de Usuario (UX/UI)
-* **Feedback Asíncrono**: Uso de `LoadingController` para bloquear la interfaz durante operaciones de red, evitando duplicidad de envíos y mejorando la percepción de trabajo de la app.
-* **Notificaciones**: Sistema de `ToastController` con colores temáticos para confirmar éxitos (success) o errores (danger).
-* **Animaciones**: Implementación de `AnimationController` para la entrada fluida de tarjetas y elementos de la lista mediante transformaciones de opacidad y posición.
-* **Skeleton Screens**: Uso de `ion-skeleton-text` para ofrecer feedback visual de carga mientras se obtienen los datos iniciales del servidor.
+### 3. Filtrado y Ordenación Avanzada
+* **Búsqueda Híbrida**: Sistema que combina peticiones al servidor con un filtrado local mediante `filter()` y `toLowerCase()` para resultados precisos e insensibles a mayúsculas.
+* **Ordenación Dinámica**: Sistema que delega la carga al backend mediante parámetros de URL compatibles con **JSON Server 1.x** (ej: `_sort=-anio`).
+
+### 4. Experiencia de Usuario (UX/UI)
+* **Diseño Premium**: Tarjetas de visualización de **400px** con imágenes circulares y bordes dinámicos (dorados para modelos en producción).
+* **Floating Toolbar**: Barra de herramientas unificada para búsqueda y filtrado que optimiza el espacio vertical en pantallas móviles.
+* **Feedback Asíncrono**: Uso de `LoadingController` y `Skeleton Screens` (`ion-skeleton-text`) para gestionar los estados de carga.
+* **Animaciones**: Implementación de `AnimationController` para la entrada fluida de elementos en la interfaz.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-* **Core**: Ionic Framework (Standalone Components) & Angular.
+* **Core**: Ionic Framework (Standalone Components) & Angular 18.
+* **Nativo**: Capacitor 7 (Camera, Geolocation, Haptics, Share).
 * **Comunicación**: HttpClient con conversión de Observables a Promesas mediante `firstValueFrom`.
 * **Backend**: JSON Server v1.x (API REST compatible).
-* **Estilos**: SASS con variables CSS personalizadas y componentes de Ionic.
-
-
 
 ---
 

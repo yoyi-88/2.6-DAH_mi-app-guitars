@@ -11,16 +11,17 @@ export class PhotoService {
 
   constructor() { }
 
-  public async addNewToGallery() {
-    // 1. Llamamos a la API nativa
+  // En photo.service.ts
+  async addNewToGallery(): Promise<string | undefined> { // 👈 Cambiamos el tipo de retorno
     const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri, // Queremos la ruta del archivo
-      source: CameraSource.Camera,      // Queremos abrir la cámara (no la galería)
-      quality: 100                      // Calidad máxima (0-100)
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 100
     });
 
-    // 2. Guardamos la ruta en nuestra variable
-    // webPath es una URL especial que funciona tanto en web como en móvil para previsualizar
-    this.foto = capturedPhoto.webPath;
+    if (capturedPhoto.webPath) {
+      return capturedPhoto.webPath; // 👈 DEVOLVEMOS el valor
+    }
+    return undefined;
   }
 }

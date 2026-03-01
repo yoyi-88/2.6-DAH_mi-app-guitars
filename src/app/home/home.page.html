@@ -85,9 +85,17 @@
                 </ion-item>
 
                 <ion-item>
-                  <ion-label position="floating">URL de Imagen</ion-label>
-                  <ion-input [(ngModel)]="nuevaGuitarra.imagen" type="text" name="imagen"></ion-input>
+                  <ion-label position="floating">Imagen de la guitarra (url o foto)</ion-label>
+                  <ion-input [(ngModel)]="nuevaGuitarra.imagen" ></ion-input>
+
+                  <ion-button slot="end" fill="clear" (click)="tomarFotoGuitarra()">
+                    <ion-icon name="camera-outline"></ion-icon>
+                  </ion-button>
                 </ion-item>
+
+                <div *ngIf="nuevaGuitarra.imagen" class="ion-padding-start">
+                  <img [src]="nuevaGuitarra.imagen" style="width: 100px; border-radius: 10px; margin-top: 10px;">
+                </div>
 
                 <ion-item lines="none" class="ion-margin-top">
                   <ion-toggle [(ngModel)]="nuevaGuitarra.enProduccion" labelPlacement="end" checked name="enProduccion">

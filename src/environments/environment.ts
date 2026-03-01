@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // Añadimos nuestra variable global aquí
-  apiUrl: 'http://localhost:3000'
+  apiUrl: 'http://192.168.18.14:3000'
 };
 
 /*

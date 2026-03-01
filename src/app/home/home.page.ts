@@ -15,6 +15,7 @@ import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item
 import { GuitarraService } from '../services/guitarra';
 import { SettingsService } from '../services/settings.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { PhotoService } from '../services/photo';
 
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
@@ -57,6 +58,7 @@ export class HomePage implements AfterViewInit {
   direccionOrden: string = 'asc';
 
   constructor(
+    public photoService: PhotoService,
     private http: HttpClient,
     private toastController: ToastController,
     private alertController: AlertController,
@@ -360,6 +362,17 @@ export class HomePage implements AfterViewInit {
       }
     } catch (error) {
       console.error('Error en geocodificación automática', error);
+    }
+  }
+
+  async tomarFotoGuitarra() {
+    // Usamos el método que ya tienes en tu servicio
+    const foto = await this.photoService.addNewToGallery();
+    
+    // Asignamos la ruta de la foto capturada al campo imagen de nuestra nueva guitarra
+    if (foto) {
+      this.nuevaGuitarra.imagen = foto; 
+      this.mostrarToast('📸 Foto capturada correctamente', 'success');
     }
   }
 

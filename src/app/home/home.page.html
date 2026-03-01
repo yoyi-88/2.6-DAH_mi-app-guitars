@@ -13,7 +13,7 @@
         <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-  
+
   </ion-toolbar>
 </ion-header>
 
@@ -21,25 +21,32 @@
 
 
 <ion-content [fullscreen]="true">
-    
-  <h1 style="text-align: center;">{{ saludo }}</h1> 
 
-  <ion-searchbar 
-    placeholder="Buscar guitarra..." 
-    (ionInput)="buscar($event)" 
-    debounce="500">
-  </ion-searchbar>
+  <h1 style="text-align: center;">{{ saludo }}</h1>
 
-  <ion-item>
-    <ion-label>Ordenar por:</ion-label>
-    <ion-select value="id" (ionChange)="cambiarOrden($event)">
-      <ion-select-option value="id">Original</ion-select-option>
-      <ion-select-option value="nombre-asc">Nombre (A-Z)</ion-select-option>
-      <ion-select-option value="nombre-desc">Nombre (Z-A)</ion-select-option>
-      <ion-select-option value="anio-desc">Más nuevas primero</ion-select-option>
-      <ion-select-option value="anio-asc">Más antiguas primero</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <div class="contenedor-filtros ion-padding">
+    <ion-row class="ion-align-items-center barra-busqueda-pro">
+      <ion-col size="8">
+        <ion-searchbar placeholder="Buscar modelo..." (ionInput)="buscar($event)" debounce="500" class="buscador-limpio"
+          mode="ios">
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-item lines="none" class="selector-orden-pro">
+          <ion-icon name="swap-vertical-outline" slot="start" color="secondary"></ion-icon>
+          <ion-select label-placement="stacked" interface="popover" value="id" (ionChange)="cambiarOrden($event)"
+            toggleIcon="chevron-down-outline">
+            <ion-select-option value="id">Original</ion-select-option>
+            <ion-select-option value="nombre-asc">A-Z</ion-select-option>
+            <ion-select-option value="nombre-desc">Z-A</ion-select-option>
+            <ion-select-option value="anio-desc">Nuevas</ion-select-option>
+            <ion-select-option value="anio-asc">Antiguas</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
 
   <ion-grid #profileCard>
 
@@ -87,6 +94,20 @@
                     En Producción
                   </ion-toggle>
                 </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Lugar de creación</ion-label>
+                  <ion-input [(ngModel)]="nuevaGuitarra.ubicacionNombre" (ionBlur)="capturarCoordenadas()">
+                  </ion-input>
+
+                  <ion-icon slot="end" [name]="nuevaGuitarra.lat ? 'location' : 'location-outline'"
+                    [color]="nuevaGuitarra.lat ? 'success' : 'medium'">
+                  </ion-icon>
+                </ion-item>
+
+                <ion-note *ngIf="nuevaGuitarra.lat" color="success" style="margin-left: 15px; font-size: 0.8em;">
+                  📍 GPS capturado: {{nuevaGuitarra.lat.toFixed(4)}}, {{nuevaGuitarra.lng?.toFixed(4)}}
+                </ion-note>
               </ion-list>
 
               <ion-button expand="block" class="ion-margin-top" (click)="confirmarYAgregar()">
@@ -99,7 +120,9 @@
       </ion-row>
 
       <ion-row>
-        <ion-col><hr></ion-col>
+        <ion-col>
+          <hr>
+        </ion-col>
       </ion-row>
 
       <ion-grid>
@@ -113,8 +136,9 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      
 
-    </div> </ion-grid>
+
+    </div>
+  </ion-grid>
 
 </ion-content>

@@ -28,4 +28,12 @@ export class ListItemComponent implements OnInit {
     console.log('Datos de la lista:', this.guitarra);
   }
 
+  verEnMapa(guitarra: Guitarra) {
+    if (guitarra.lat && guitarra.lng) {
+      // URL estándar para Google Maps
+      const url = `https://www.google.com/maps/search/?api=1&query=${guitarra.lat},${guitarra.lng}`;
+      window.open(url, '_system');
+    }
+  }
+
 }

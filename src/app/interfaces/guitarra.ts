@@ -5,4 +5,8 @@ export interface Guitarra {
     corte: string;
     anio: number;
     enProduccion: boolean;
+    // Nuevos campos para la ubicación
+    ubicacionNombre?: string; 
+    lat?: number;
+    lng?: number;
 }

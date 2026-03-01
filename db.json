@@ -6,7 +6,10 @@
       "nombre": "Fender Stratocaster",
       "corte": "Strat",
       "anio": 1954,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Corona, California",
+      "lat": 33.8753,
+      "lng": -117.5664
     },
     {
       "id": "2",
@@ -14,7 +17,10 @@
       "nombre": "Gibson Les Paul Standard",
       "corte": "Single Cut",
       "anio": 1952,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Nashville, Tennessee",
+      "lat": 36.1627,
+      "lng": -86.7816
     },
     {
       "id": "3",
@@ -22,7 +28,10 @@
       "nombre": "Ibanez RG550",
       "corte": "Superstrat",
       "anio": 1987,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Nagoya, Japón",
+      "lat": 35.1815,
+      "lng": 136.9066
     },
     {
       "id": "4",
@@ -30,7 +39,10 @@
       "nombre": "Gibson SG",
       "corte": "Double Cut",
       "anio": 1961,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Nashville, Tennessee",
+      "lat": 36.1627,
+      "lng": -86.7816
     },
     {
       "id": "5",
@@ -38,7 +50,10 @@
       "nombre": "Fender Telecaster",
       "corte": "Single Cut",
       "anio": 1950,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Corona, California",
+      "lat": 33.8753,
+      "lng": -117.5664
     },
     {
       "id": "6",
@@ -46,7 +61,10 @@
       "nombre": "Jackson Soloist",
       "corte": "Superstrat",
       "anio": 1984,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Scottsdale, Arizona",
+      "lat": 33.4942,
+      "lng": -111.9261
     },
     {
       "id": "7",
@@ -54,7 +72,10 @@
       "nombre": "Gretsch White Falcon",
       "corte": "Hollow Body",
       "anio": 1955,
-      "enProduccion": false
+      "enProduccion": false,
+      "ubicacionNombre": "Savannah, Georgia",
+      "lat": 32.0809,
+      "lng": -81.0912
     },
     {
       "id": "8",
@@ -62,15 +83,10 @@
       "nombre": "PRS Custom 24",
       "corte": "Double Cut",
       "anio": 1985,
-      "enProduccion": true
-    },
-    {
-      "id": "3b09",
-      "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_947523-MLA31094143009_062019-F.webpv",
-      "nombre": "bajolele",
-      "corte": "bajo",
-      "anio": 1500,
-      "enProduccion": true
+      "enProduccion": true,
+      "ubicacionNombre": "Stevensville, Maryland",
+      "lat": 38.9807,
+      "lng": -76.3149
     }
   ],
   "usuarios": [

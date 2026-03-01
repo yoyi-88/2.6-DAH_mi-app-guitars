@@ -1,18 +1,37 @@
-<ion-card *ngIf="guitarra" [color]="guitarra.enProduccion ? 'primary' : 'light'">
-
-  <ion-item>
-    <ion-label>
-      <img [src]="guitarra.imagen" class="imagen-guitarra" alt="{{ guitarra.nombre }}">
-      <h2>{{ guitarra.nombre | uppercase }}</h2>
-      <p>Corte: {{ guitarra.corte }}</p>
-      <p>Año: {{ guitarra.anio }}</p>
-      <p *ngIf="!guitarra.enProduccion" class="fuera-produccion">
-        Fuera de producción
+<ion-card *ngIf="guitarra" [class]="guitarra.enProduccion ? 'card-produccion' : 'card-fuera'">
+  
+  <div class="contenedor-principal ion-text-center">
+    <img [src]="guitarra.imagen" class="imagen-guitarra" alt="{{ guitarra.nombre }}">
+    
+    <div class="bloque-info">
+      <h2 class="nombre-titulo">{{ guitarra.nombre | uppercase }}</h2>
+      <p class="subtitulo">Corte: {{ guitarra.corte }} | Año: {{ guitarra.anio }}</p>
+      
+      <p *ngIf="guitarra.ubicacionNombre" class="ubicacion-texto">
+        <ion-icon name="pin"></ion-icon> 
+        {{ guitarra.ubicacionNombre }}
       </p>
-    </ion-label>
+      
+      <p *ngIf="guitarra.lat" class="gps-texto">
+        GPS: {{ guitarra.lat.toFixed(3) }}, {{ guitarra.lng?.toFixed(3) }}
+      </p>
 
-    <ion-button slot="end" fill="outline"  [routerLink]="['/ver-detalles-guitarra', guitarra.id]">
-      Ver
-    </ion-button>
-  </ion-item>
+      <div *ngIf="!guitarra.enProduccion" class="fuera-produccion-badge">
+        FUERA DE PRODUCCIÓN
+      </div>
+    </div>
+
+    <div class="barra-acciones">
+      <ion-button fill="outline" color="dark" [routerLink]="['/ver-detalles-guitarra', guitarra.id]">
+        <ion-icon name="eye-outline" slot="start"></ion-icon>
+        VER DETALLES
+      </ion-button>
+      
+      <ion-button *ngIf="guitarra.lat" (click)="verEnMapa($event)" fill="solid" color="warning">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        MAPA
+      </ion-button>
+    </div>
+  </div>
+
 </ion-card>

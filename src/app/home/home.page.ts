@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import {
   IonInput, IonToggle, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonLabel, IonGrid, IonRow, IonCol,
   IonButton, IonButtons, IonCardHeader, IonCardTitle, IonCardContent, ToastController, AlertController, IonSkeletonText,
-  AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption
+  AnimationController, Animation, IonIcon, LoadingController, IonSearchbar, IonSelect, IonSelectOption, IonNote
 } from '@ionic/angular/standalone';
 import { Injectable } from '@angular/core';
 import { Guitarra } from '../interfaces/guitarra'; // Nuestra interfaz de datos
@@ -14,6 +14,10 @@ import { RouterModule, Router } from '@angular/router';
 import { GuitarraItemComponent } from "../components/guitarra-item/guitarra-item.component";
 import { GuitarraService } from '../services/guitarra';
 import { SettingsService } from '../services/settings.service';
+import { Geolocation } from '@capacitor/geolocation';
+
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 
 
@@ -39,7 +43,7 @@ export class MiServicio {
     IonSkeletonText, // Componente para hacer la carga
     IonButtons,
     RouterModule,
-    IonSearchbar, IonSelect, IonSelectOption
+    IonSearchbar, IonSelect, IonSelectOption, IonNote
   ],
 })
 export class HomePage implements AfterViewInit {
@@ -53,6 +57,7 @@ export class HomePage implements AfterViewInit {
   direccionOrden: string = 'asc';
 
   constructor(
+    private http: HttpClient,
     private toastController: ToastController,
     private alertController: AlertController,
     // 3. Inyectamos el AnimationController
@@ -333,6 +338,31 @@ export class HomePage implements AfterViewInit {
     // 6. Ejecutamos la animación
     this.animacion.play();
   }
+
+  async capturarCoordenadas() {
+    const nombreLugar = this.nuevaGuitarra.ubicacionNombre;
+
+    // Si el campo está vacío, no hacemos nada para no gastar recursos
+    if (!nombreLugar || nombreLugar.trim().length < 3) return;
+
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(nombreLugar)}&limit=1`;
+      
+      // Realizamos la petición silenciosamente
+      const respuesta: any = await firstValueFrom(this.http.get(url));
+
+      if (respuesta && respuesta.length > 0) {
+        this.nuevaGuitarra.lat = parseFloat(respuesta[0].lat);
+        this.nuevaGuitarra.lng = parseFloat(respuesta[0].lon);
+        
+        // Feedback visual rápido
+        this.mostrarToast('📍 Ubicación vinculada automáticamente', 'success');
+      }
+    } catch (error) {
+      console.error('Error en geocodificación automática', error);
+    }
+  }
+
 
   
 

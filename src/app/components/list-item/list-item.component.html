@@ -9,10 +9,24 @@
       <p *ngIf="!guitarra.enProduccion" style="color: red; font-weight: bold;">
         Fuera de producción
       </p>
+      <p style="display: flex; align-items: center; margin-top: 5px;">
+        <ion-icon name="pin-outline" style="margin-right: 5px; color: #3880ff;"></ion-icon>
+        {{ guitarra.ubicacionNombre || 'Ubicación desconocida' }}
+      </p>
+
+      <ion-note *ngIf="guitarra.lat" color="medium" style="font-size: 0.8em;">
+        GPS: {{ guitarra.lat.toFixed(3) }}, {{ guitarra.lng?.toFixed(3) }}
+      </ion-note>
     </ion-label>
 
-    <ion-button (click)="mostrarDetalles()" slot="end">
-      Ver
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="mostrarDetalles()" fill="outline" color="secondary" size="small">
+        Ver
+      </ion-button>
+
+      <ion-button *ngIf="guitarra.lat" (click)="verEnMapa(guitarra)" fill="clear" color="primary">
+        <ion-icon name="map-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-item>
 </ion-card>

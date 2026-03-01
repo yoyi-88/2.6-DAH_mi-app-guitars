@@ -1,6 +1,89 @@
+/* Configuración de las tarjetas */
+ion-card {
+  margin: 10px;
+  background: #ffffff; /* Fondo siempre blanco */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+/* Solo borde dorado para las que están en producción */
+.card-produccion {
+  border: 1px solid #d4af37; 
+}
+
+/* Borde gris suave para las que están fuera de producción */
+.card-fuera {
+  border: 1px solid #e0e0e0;
+  opacity: 0.9;
+}
+
+.contenedor-principal {
+  padding: 10px;
+}
+
 .imagen-guitarra {
-  width: 100%;              /* ocupa todo el ancho disponible */
-  height: 400px;            /* altura fija para todas las imágenes */
-  object-fit: cover;        /* recorta la imagen sin deformarla */
-  border-radius: 200px;       /* bordes*/
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 200px; /* Círculo perfecto */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.bloque-info {
+  margin: 25px 0;
+}
+
+.nombre-titulo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 5px;
+}
+
+.subtitulo {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.ubicacion-texto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #eb445a; /* Rojo para el icono de pin */
+  margin: 15px 0 5px 0;
+  
+  ion-icon { margin-right: 5px; }
+}
+
+.gps-texto {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.fuera-produccion-badge {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 5px 15px;
+  border: 2px solid #eb445a;
+  color: #eb445a;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.barra-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+
+  ion-button {
+    --border-radius: 12px;
+    font-weight: bold;
+    height: 45px;
+  }
 }

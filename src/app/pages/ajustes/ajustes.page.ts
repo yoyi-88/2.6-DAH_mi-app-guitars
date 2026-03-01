@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote, IonCard, IonImg, IonFabButton, IonFab, IonIcon, IonButton, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
 import { PhotoService } from '../../services/photo';
-import { LocationService } from 'src/app/services/location';
 
 
 @Component({
@@ -23,8 +22,7 @@ export class AjustesPage implements OnInit {
   nombreUsuario: string = '';
 
   constructor(private settingsService: SettingsService,
-    public photoService: PhotoService,
-    public locationService: LocationService
+    public photoService: PhotoService
   ) { }
 
   // ¡IMPORTANTE! Añadimos 'async' para poder usar 'await' dentro
@@ -65,11 +63,4 @@ export class AjustesPage implements OnInit {
     this.photoService.addNewToGallery();
   }
 
-  async obtenerGPS() {
-  try {
-    await this.locationService.obtenerPosicionActual();
-  } catch (error) {
-    console.log("El usuario denegó el permiso o el GPS está apagado");
-  }
-}
 }

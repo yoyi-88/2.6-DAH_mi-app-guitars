@@ -1,15 +1,50 @@
-ion-card {
-  margin: 10px;
-  border-radius: 12px;
-  transition: transform 0.2s ease;
+.contenedor-filtros {
+  background: #fdfdfd; // Un fondo muy claro para separar del contenido
+  margin-bottom: 10px;
 }
 
-ion-card:hover {
-  transform: scale(1.02);
+.barra-busqueda-pro {
+  background: white;
+  border-radius: 50px; // Forma de píldora
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2); // Toque dorado suave
+  margin: 0 5px;
 }
 
-.fuera-produccion {
-  color: red;
+.buscador-limpio {
+  --background: transparent;
+  --box-shadow: none;
+  padding: 0;
+  height: 45px;
+}
+
+.selector-orden-pro {
+  --background: transparent;
+  --padding-start: 0;
+  font-size: 0.85rem;
   font-weight: bold;
+  
+  ion-select {
+    width: 100%;
+    min-height: 45px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    --placeholder-color: var(--ion-color-secondary);
+    --placeholder-opacity: 1;
+  }
+
+  ion-icon {
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
 }
 
+// Ajuste para el saludo
+h1 {
+  font-family: 'Playfair Display', serif; // Fuente elegante si la tienes
+  font-style: italic;
+  font-weight: 800;
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}

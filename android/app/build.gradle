@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.yoyi.miappguitar"
+    namespace "com.yoyi.guitarvault"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.yoyi.miappguitar"
+        applicationId "com.yoyi.guitarvault"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

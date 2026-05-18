@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonNote, IonCard, IonImg, IonFabButton, IonFab, IonIcon, IonButton, IonCardContent, IonCardHeader, IonCardTitle } from '@ionic/angular/standalone';
+import {IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonListHeader, IonItem, IonLabel, IonButtons, IonBackButton, IonToggle, IonInput, IonCard, IonImg, IonFabButton, IonFab, IonIcon} from '@ionic/angular/standalone';
 import { PhotoService } from '../../services/photo';
 
 
@@ -11,10 +11,10 @@ import { PhotoService } from '../../services/photo';
   templateUrl: './ajustes.page.html',
   styleUrls: ['./ajustes.page.scss'],
   standalone: true,
-  imports: [IonCardTitle, IonCardHeader, IonCardContent, IonButton, IonIcon, IonFab, IonFabButton, IonImg, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, 
+  imports: [IonIcon, IonFab, IonFabButton, IonImg, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, 
     IonButtons, IonBackButton, 
     IonList, IonListHeader, IonItem, IonLabel, IonToggle, 
-    FormsModule, IonInput, IonNote, CommonModule]
+    FormsModule, IonInput, CommonModule]
 })
 export class AjustesPage implements OnInit {
 

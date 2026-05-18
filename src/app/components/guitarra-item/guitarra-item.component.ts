@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonItem, IonLabel, IonButton, IonImg, IonIcon, IonButtons, IonCol, IonGrid, IonRow, IonThumbnail, IonNote } from '@ionic/angular/standalone';
+import { IonCard, IonButton, IonIcon} from '@ionic/angular/standalone';
 import { Guitarra } from 'src/app/interfaces/guitarra';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -8,7 +8,7 @@ import { Share } from '@capacitor/share';
 @Component({
   selector: 'app-guitarra-item',
   standalone: true,
-  imports: [IonImg, CommonModule, IonCard, IonItem, IonLabel, IonButton, RouterLink, IonIcon, IonButtons, IonCol, IonGrid, IonRow, IonThumbnail, IonNote],
+  imports: [CommonModule, IonCard, IonButton, RouterLink, IonIcon],
   templateUrl: './guitarra-item.component.html',
   styleUrls: ['./guitarra-item.component.scss']
 })

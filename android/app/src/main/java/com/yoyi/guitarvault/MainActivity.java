@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.yoyi.guitarvault;
 
 import com.getcapacitor.BridgeActivity;
 
